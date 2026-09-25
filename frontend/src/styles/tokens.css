@@ -1,0 +1,79 @@
+/* RASAD dizayn tokenlari (prompt §4–5).
+   Qizil, sariq va yashil faqat semantik ma'noda ishlatiladi: xavf darajasi va ogohlantirishlar. */
+
+:root {
+  /* Yuzalar */
+  --bg: #f5f9fd;
+  --surface: #ffffff;
+  --surface-2: #f8fbfe;
+  --surface-3: #eef4fa;
+  --border: #dde7f0;
+  --border-strong: #c9d7e5;
+
+  /* Brend */
+  --navy: #0b1f3a;
+  --navy-2: #13294a;
+  --navy-3: #1c3760;
+  --blue: #216df3;
+  --blue-600: #1a5ad0;
+  --blue-50: #eaf1fe;
+  --blue-100: #d5e3fd;
+  --cyan: #38bdf8;
+  --cyan-50: #e6f6fe;
+
+  /* Matn */
+  --text: #0b1f3a;
+  --text-2: #33465f;
+  --muted: #607087;
+  --muted-2: #8795a8;
+  --on-dark: #e8eef7;
+  --on-dark-muted: #9fb0c8;
+
+  /* Semantik */
+  --risk-high: #d9534f;
+  --risk-high-bg: #fbeceb;
+  --risk-high-border: #f2c9c7;
+  --risk-medium: #d99b22;
+  --risk-medium-text: #9a6a0c;
+  --risk-medium-bg: #fcf4e3;
+  --risk-medium-border: #f1dcae;
+  --risk-low: #2fa36b;
+  --risk-low-text: #1f7a4e;
+  --risk-low-bg: #e8f6ef;
+  --risk-low-border: #bfe5d1;
+  --info: #2878ff;
+  --info-bg: #eaf2ff;
+
+  /* Tipografiya */
+  --font: 'Inter Variable', 'Inter', 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-xs: 11.5px;
+  --fs-sm: 12.5px;
+  --fs-md: 13.5px;
+  --fs-base: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 19px;
+  --fs-2xl: 23px;
+  --fs-metric: 28px;
+
+  /* O'lchamlar */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --sidebar-w: 252px;
+  --topbar-h: 60px;
+  --gap: 16px;
+  --gap-lg: 20px;
+
+  /* Soyalar */
+  --shadow-xs: 0 1px 2px rgba(11, 31, 58, 0.05);
+  --shadow-sm: 0 1px 3px rgba(11, 31, 58, 0.06), 0 1px 2px rgba(11, 31, 58, 0.04);
+  --shadow-md: 0 6px 18px -6px rgba(11, 31, 58, 0.14), 0 2px 6px rgba(11, 31, 58, 0.05);
+  --shadow-lg: 0 20px 40px -12px rgba(11, 31, 58, 0.25);
+  --focus-ring: 0 0 0 3px rgba(33, 109, 243, 0.35);
+
+  /* Harakat */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 150ms;
+  --t: 200ms;
+  --t-slow: 250ms;
+}

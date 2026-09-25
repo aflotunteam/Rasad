@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "rasad-api",
+      "runtimeExecutable": "U:/Licey/Project1/backend/.venv/Scripts/python.exe",
+      "runtimeArgs": ["-m", "uvicorn", "app.main:app", "--app-dir", "U:/Licey/Project1/backend", "--host", "127.0.0.1", "--port", "8000"],
+      "port": 8000
+    },
+    {
+      "name": "rasad-web",
+      "runtimeExecutable": "C:/Program Files/nodejs/node.exe",
+      "runtimeArgs": ["U:/Licey/Project1/frontend/node_modules/vite/bin/vite.js", "U:/Licey/Project1/frontend"],
+      "port": 5173
+    }
+  ]
+}

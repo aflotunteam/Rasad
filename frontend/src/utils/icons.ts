@@ -1,0 +1,46 @@
+import {
+  Activity,
+  Briefcase,
+  CalendarClock,
+  Cpu,
+  Factory,
+  FileWarning,
+  GitCompare,
+  GraduationCap,
+  HardHat,
+  Layers,
+  MapPin,
+  Share2,
+  ShoppingCart,
+  Stethoscope,
+  TrendingDown,
+  Truck,
+  Utensils,
+  Wheat,
+  type LucideIcon,
+} from 'lucide-vue-next'
+
+export const RISK_TYPE_ICON: Record<string, LucideIcon> = {
+  R01: TrendingDown,
+  R02: GitCompare,
+  R03: MapPin,
+  R04: Activity,
+  R05: Share2,
+  R06: FileWarning,
+  R07: CalendarClock,
+  R08: Layers,
+}
+
+export const SECTOR_ICON: Record<string, LucideIcon> = {
+  'shopping-cart': ShoppingCart,
+  briefcase: Briefcase,
+  'hard-hat': HardHat,
+  wheat: Wheat,
+  truck: Truck,
+  factory: Factory,
+  utensils: Utensils,
+  cpu: Cpu,
+  'graduation-cap': GraduationCap,
+  stethoscope: Stethoscope,
+  layers: Layers,
+}

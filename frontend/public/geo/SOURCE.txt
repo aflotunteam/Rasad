@@ -1,0 +1,4 @@
+uzb_adm1.json — geoBoundaries gbOpen UZB ADM1 (2017), soddalashtirilgan.
+Manba: https://www.geoboundaries.org  (OpenStreetMap, Wambacher)
+Litsenziya: Open Data Commons Open Database License 1.0 (ODbL)
+Koordinatalar 4 xonagacha yaxlitlangan, region_id xossasi qo‘shilgan.

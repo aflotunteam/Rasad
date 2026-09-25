@@ -21,3 +21,8 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+*.tsbuildinfo
