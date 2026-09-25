@@ -7,6 +7,7 @@ import {
   MarkAreaComponent,
   MarkLineComponent,
   MarkPointComponent,
+  TitleComponent,
   TooltipComponent,
 } from 'echarts/components'
 import { use } from 'echarts/core'
@@ -20,6 +21,7 @@ use([
   ScatterChart,
   CustomChart,
   GridComponent,
+  TitleComponent,
   TooltipComponent,
   LegendComponent,
   MarkAreaComponent,
