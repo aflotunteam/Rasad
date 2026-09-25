@@ -29,6 +29,16 @@ def test_requires_token(client):
     assert client.get(f"{API}/dashboard").status_code == 401
 
 
+def test_token_in_query_string_is_rejected(client, admin_h):
+    token = admin_h["Authorization"].split()[1]
+    assert client.get(f"{API}/dashboard", params={"token": token}).status_code == 401
+
+
+def test_invalid_token_is_rejected(client):
+    r = client.get(f"{API}/dashboard", headers={"Authorization": "Bearer noto-g-ri"})
+    assert r.status_code == 401 and r.json()["error"]["code"] == "AUTH_003"
+
+
 def test_dashboard_and_map_regions(client, admin_h):
     d = client.get(f"{API}/dashboard", headers=admin_h).json()["data"]
     assert len(d["regions"]) == 14  # AC-03

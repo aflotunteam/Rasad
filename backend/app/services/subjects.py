@@ -314,6 +314,10 @@ PEER_METRICS = [
 ]
 
 
+def _scale(x: float, mult: float, offset: float) -> float:
+    return round(float(x) * mult + offset, 2)
+
+
 def peers(db: Session, code: str, cu: CurrentUser) -> dict:
     subj = _get_subject(db, code, cu)
     df = _features_frame(db)
@@ -333,11 +337,11 @@ def peers(db: Session, code: str, cu: CurrentUser) -> dict:
             if s.empty or value is None or pd.isna(value):
                 continue
             q = s.quantile([0.1, 0.25, 0.5, 0.75, 0.9])
-            conv = (lambda x: round(float(x) * mult + offset, 2))
             rows.append({
                 "group": gkey, "label": glabel, "n": int(len(s)),
-                "p10": conv(q[0.1]), "p25": conv(q[0.25]), "median": conv(q[0.5]),
-                "p75": conv(q[0.75]), "p90": conv(q[0.9]),
+                "p10": _scale(q[0.1], mult, offset), "p25": _scale(q[0.25], mult, offset),
+                "median": _scale(q[0.5], mult, offset), "p75": _scale(q[0.75], mult, offset),
+                "p90": _scale(q[0.9], mult, offset),
                 "percentile": round(float((s < value).mean() * 100), 1),
             })
         out.append({"metric": key, "label": label, "unit": unit,

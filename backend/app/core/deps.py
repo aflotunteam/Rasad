@@ -69,10 +69,10 @@ def get_current_user(
     creds: HTTPAuthorizationCredentials | None = Depends(bearer),
     db: Session = Depends(get_db),
 ) -> CurrentUser:
-    token = creds.credentials if creds else request.query_params.get("token")
-    if not token:
+    # Token faqat Authorization sarlavhasidan olinadi: URL dagi token loglarda qolib ketadi.
+    if creds is None or not creds.credentials:
         raise Unauthorized()
-    payload = decode_token(token)
+    payload = decode_token(creds.credentials)
     user = db.get(User, int(payload["sub"]))
     if user is None or not user.is_active:
         raise Unauthorized("Foydalanuvchi faol emas")

@@ -13,6 +13,8 @@ from app.core.responses import fail
 
 log = logging.getLogger("rasad")
 settings = get_settings()
+if settings.jwt_secret == "dev-only-secret-change-me":
+    log.warning("JWT_SECRET o'rnatilmagan: ochiq namoyish kaliti ishlatilmoqda. .env faylida JWT_SECRET ni belgilang.")
 
 app = FastAPI(
     title="RASAD API",

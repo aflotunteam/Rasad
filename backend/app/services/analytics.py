@@ -14,7 +14,6 @@ from app.models import (
     ExpertDecision,
     FeatureRegistry,
     ModelRegistry,
-    MonthlyMetric,
     Region,
     RiskScore,
     Sector,
@@ -91,7 +90,6 @@ def dashboard(db: Session, region: str | None, scope: str | None) -> dict:
     hist, edges = np.histogram(df.score, bins=10, range=(0, 100))
 
     # Analitik zanjir bo'yicha hajmlar (prompt §9).
-    metric_rows = db.scalar(select(func.count()).select_from(MonthlyMetric))
     decisions = db.scalar(select(func.count()).select_from(ExpertDecision))
     features = db.scalar(select(func.count()).select_from(FeatureRegistry))
     chain = [

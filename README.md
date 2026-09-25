@@ -70,7 +70,7 @@ backend/
   ml/       Risk Engine: belgilar → qoidalar + Isolation Forest + vaqt + graf → kalibrlash → sabablar
   data_gen/ Deterministik sintetik generator (5000 subyekt, 14 hudud, 11 soha, 24 oy)
   scripts/  seed.py, make_samples.py
-  tests/    pytest (27 ta test)
+  tests/    pytest (29 ta test)
 data/samples/  Import ustasi uchun namuna fayllar (qasddan qo‘yilgan xatolar bilan)
 docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
 ```
@@ -102,8 +102,8 @@ docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
 ## Testlar
 
 ```bash
-cd backend && .venv/Scripts/python -m pytest -q
-cd frontend && npm run typecheck && npm run build
+cd backend && .venv/Scripts/python -m pytest -q          # 29 ta test: engine, API, RBAC, audit, import, hisobotlar
+cd frontend && npm test && npm run typecheck && npm run build   # 12 ta unit test + tiplar + build
 ```
 
 ## MVP cheklovlari (ochiq aytilgan)
