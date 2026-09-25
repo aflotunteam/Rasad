@@ -33,7 +33,7 @@ async function logout() {
         <div class="tb-value">{{ periodRange(meta.meta?.period?.start, meta.meta?.period?.end) }}</div>
       </div>
     </div>
-    <div class="tb-item" title="Faol manbalardan oxirgi yuklash vaqti">
+    <div class="tb-item tb-fresh" title="Faol manbalardan oxirgi yuklash vaqti">
       <DatabaseZap :size="16" />
       <div>
         <div class="tb-label">Ma’lumot yangiligi</div>
@@ -141,7 +141,9 @@ async function logout() {
   color: #fff;
 }
 
-.profile-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; }
+.profile-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; max-width: 190px; }
+.profile-name,
+.profile-role { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .profile-name { font-size: var(--fs-sm); font-weight: 620; color: var(--navy); }
 .profile-role { font-size: 11.5px; color: var(--muted); }
 
@@ -174,7 +176,7 @@ async function logout() {
 
 .pm-item:hover { background: var(--surface-3); }
 
-@media (max-width: 1380px) {
-  .tb-item:nth-of-type(2) { display: none; }
+@media (max-width: 1540px) {
+  .tb-fresh { display: none; }
 }
 </style>

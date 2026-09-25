@@ -72,7 +72,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', shortcut))
       v-model="q"
       class="gsearch-input"
       type="search"
-      placeholder="Subyekt kodi bo‘yicha qidirish (masalan, 125)"
+      placeholder="Subyekt kodi bo‘yicha qidirish, masalan 125"
       aria-label="Global qidiruv"
       role="combobox"
       :aria-expanded="open"
@@ -102,7 +102,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', shortcut))
 </template>
 
 <style scoped>
-.gsearch { position: relative; width: min(440px, 36vw); }
+.gsearch { position: relative; width: min(420px, 34vw); min-width: 260px; }
 
 .gsearch-icon {
   position: absolute;

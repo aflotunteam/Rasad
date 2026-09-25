@@ -16,21 +16,21 @@ withDefaults(
 
 <template>
   <component :is="to ? 'RouterLink' : 'div'" :to="to" class="metric card" :class="{ link: !!to }">
-    <div class="metric-icon" :class="`tone-${tone}`"><component :is="icon" :size="18" :stroke-width="1.9" /></div>
-    <div class="metric-main">
+    <div class="metric-top">
+      <div class="metric-icon" :class="`tone-${tone}`"><component :is="icon" :size="16" :stroke-width="1.9" /></div>
       <div class="metric-label">{{ label }}</div>
-      <div class="metric-value num">{{ value }}</div>
-      <div v-if="hint" class="metric-hint">{{ hint }}</div>
     </div>
+    <div class="metric-value num" :title="value">{{ value }}</div>
+    <div v-if="hint" class="metric-hint" :title="hint">{{ hint }}</div>
   </component>
 </template>
 
 <style scoped>
 .metric {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 15px 16px;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 15px 13px;
   min-width: 0;
   color: inherit;
   text-decoration: none;
@@ -43,9 +43,9 @@ withDefaults(
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
 }
 
 .tone-navy { background: #e9eef6; color: var(--navy); }
@@ -55,12 +55,11 @@ withDefaults(
 .tone-medium { background: var(--risk-medium-bg); color: var(--risk-medium-text); }
 .tone-neutral { background: var(--surface-3); color: var(--muted); }
 
-.metric-main { min-width: 0; }
-.metric-label { font-size: var(--fs-sm); color: var(--muted); line-height: 1.3; }
+.metric-top { display: flex; align-items: center; gap: 9px; min-height: 32px; }
+.metric-label { font-size: var(--fs-sm); color: var(--muted); line-height: 1.25; }
 
 .metric-value {
-  margin-top: 4px;
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 700;
   color: var(--navy);
   letter-spacing: -0.02em;
@@ -70,5 +69,5 @@ withDefaults(
   text-overflow: ellipsis;
 }
 
-.metric-hint { margin-top: 4px; font-size: var(--fs-xs); color: var(--muted-2); }
+.metric-hint { margin-top: -3px; font-size: var(--fs-xs); color: var(--muted-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
