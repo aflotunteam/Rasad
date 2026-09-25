@@ -1,0 +1,766 @@
+RASAD LOYIHASI UCHUN TO‘LDIRILGAN TEXNIK TOPSHIRIQ (TZ)
+
+1. AVVALGI TZDAGI ASOSIY KAMCHILIKLAR
+
+1) MVP va sanoat versiyasi chegarasi aniq emas
+Nima uchun muhim: Ikki kunlik xakaton vazifasi bilan to‘liq davlat tizimi aralashib ketadi.
+To‘ldirish: MVP, Pilot va Production alohida belgilanadi.
+
+2) Ma’lumotlar sifati nazorati yetarli emas
+Nima uchun muhim: Noto‘g‘ri ma’lumot noto‘g‘ri xavf beradi.
+To‘ldirish: Data Quality moduli qo‘shiladi.
+
+3) Subyektlarni identifikatsiyalash aniq emas
+Nima uchun muhim: Bir korxona turli manbada turlicha yozilishi mumkin.
+To‘ldirish: Entity Resolution mexanizmi kiritiladi.
+
+4) Xavf kategoriyalari umumiy
+Nima uchun muhim: “Yuqori xavf” nimani anglatishi noaniq.
+To‘ldirish: Risk Taxonomy yaratiladi.
+
+5) 0–39 / 40–69 / 70–100 chegaralari asoslanmagan
+Nima uchun muhim: Ilmiy dalilsiz qat’iy chegara xato.
+To‘ldirish: Chegaralar kalibrovka qilinadi.
+
+6) Modelni qayta o‘qitish jarayoni yo‘q
+Nima uchun muhim: Vaqt o‘tishi bilan model sifati pasayadi.
+To‘ldirish: Model Lifecycle kiritiladi.
+
+7) Model drift nazorati yo‘q
+Nima uchun muhim: Iqtisodiy muhit o‘zgaradi.
+To‘ldirish: Drift Detection moduli.
+
+8) Ma’lumot kelib chiqishi kuzatilmaydi
+Nima uchun muhim: “Bu raqam qayerdan keldi?” savoliga javob kerak.
+To‘ldirish: Data Lineage.
+
+9) API shartnomalari to‘liq emas
+Nima uchun muhim: Integratsiyada xatolar chiqadi.
+To‘ldirish: API versioning + schema.
+
+10) Fon vazifalari mexanizmi yo‘q
+Nima uchun muhim: Katta tahlil HTTP so‘rovida bajarilmaydi.
+To‘ldirish: Job Queue.
+
+11) Xatolarni boshqarish standarti yo‘q
+Nima uchun muhim: Foydalanuvchiga tushunarsiz xatolar chiqadi.
+To‘ldirish: Yagona Error Model.
+
+12) Zaxira va tiklash ko‘rsatkichlari aniq emas
+Nima uchun muhim: Favqulodda holatda tiklanish talab etiladi.
+To‘ldirish: RPO/RTO.
+
+13) Monitoring yetarli emas
+Nima uchun muhim: Tizim ishlamay qolishini kech bilish mumkin.
+To‘ldirish: Observability.
+
+14) Maxfiy kalitlar boshqaruvi yo‘q
+Nima uchun muhim: Parollarni kodda saqlash xavfli.
+To‘ldirish: Secrets Management.
+
+15) SI modeliga ruxsat berish jarayoni yo‘q
+Nima uchun muhim: Tekshirilmagan model ishlab ketishi mumkin.
+To‘ldirish: Model Approval.
+
+16) Ekspert qarorlaridan o‘rganish jarayoni yo‘q
+Nima uchun muhim: Inson fikri yo‘qolib ketadi.
+To‘ldirish: Feedback Loop.
+
+17) Axborotlarni saqlash muddati yo‘q
+Nima uchun muhim: Qonuniy va texnik xavf.
+To‘ldirish: Retention Policy.
+
+18) Insidentlarga javob berish tartibi yo‘q
+Nima uchun muhim: Xavfsizlik hodisasida harakat noaniq.
+To‘ldirish: Incident Response.
+
+19) Qabul mezonlari juda umumiy
+Nima uchun muhim: “Ishlayapti” degan subyektiv bahoga qoladi.
+To‘ldirish: O‘lchanadigan Acceptance Criteria.
+
+20) DEV/TEST/PROD muhitlari ko‘rsatilmagan
+Nima uchun muhim: Sanoat ishlab chiqish jarayoni uchun zarur.
+To‘ldirish: 3 muhitli arxitektura.
+
+2. TZNING YANGI ANIQ CHEGARALARI
+
+RASAD uch bosqichga ajratiladi.
+
+2.1. MVP — xakaton bosqichi
+Maqsad: RASAD konsepsiyasining texnik jihatdan ishlashini isbotlash.
+
+MVPda:
+- sun’iy ma’lumotlar;
+- veb-interfeys;
+- xarita;
+- subyektlar;
+- xavf modeli;
+- anomaliya aniqlash;
+- xavf sabablari;
+- oddiy bog‘lanishlar;
+- ekspert qarori;
+- hisobot
+ishlashi kifoya.
+
+2.2. Pilot — sinov joriy etish
+Bir tashkilot doirasida:
+- haqiqiy ma’lumot;
+- 1–3 ma’lumot manbasi;
+- haqiqiy ekspertlar;
+- model baholash;
+- xavfsiz integratsiya;
+- natija o‘lchovi
+amalga oshiriladi.
+
+2.3. Production — sanoat versiyasi
+Productionda:
+- yuqori ishonchlilik;
+- masshtablash;
+- axborot xavfsizligi;
+- modellar boshqaruvi;
+- to‘liq audit;
+- rezervlash;
+- monitoring;
+- avariyadan tiklash;
+- rasmiy integratsiyalar
+ta’minlanishi shart.
+
+3. XAVFLAR TASNIFI
+
+RASADda xavf albatta turlarga ajratilishi kerak.
+
+R01 — Faoliyat dinamikasi xavfi
+Subyektning iqtisodiy ko‘rsatkichlarida keskin o‘zgarish.
+
+R02 — Sohaviy og‘ish
+Subyekt o‘z sohasidagi o‘xshash subyektlardan keskin farq qiladi.
+
+R03 — Hududiy og‘ish
+Subyekt hududiy iqtisodiy qonuniyatlarga nisbatan g‘ayrioddiy holatga ega.
+
+R04 — Operatsion anomaliya
+Operatsiyalar soni, hajmi yoki davriyligida g‘ayrioddiylik.
+
+R05 — Aloqadorlik xavfi
+Xavfi yuqori subyektlar bilan g‘ayrioddiy bog‘liqlik.
+
+R06 — Ma’lumotlar ziddiyati
+Turli manbalardagi ma’lumotlar o‘zaro mos kelmaydi.
+
+R07 — Davriy xavf
+Vaqt qatorlarida mavsumiy qonuniyatdan sezilarli og‘ish.
+
+R08 — Kompleks xavf
+Bir nechta xavf signalining bir vaqtda kuzatilishi.
+
+Bu tasnif keyinchalik kengaytirilishi kerak.
+
+4. XAVF DARAJALARINI TO‘G‘RI BELGILASH
+
+Avvalgi 0–39 / 40–69 / 70–100 chegaralarini doimiy texnik talab sifatida qabul qilish noto‘g‘ri.
+
+To‘g‘ri yondashuv: chegaralar tekshirilgan ma’lumotlar asosida kalibrovka qilinishi kerak.
+
+MVP uchun shartli konfiguratsiya:
+LOW_THRESHOLD=40
+HIGH_THRESHOLD=70
+
+Lekin bu qiymatlar Settings → Risk Thresholds orqali o‘zgarishi kerak.
+
+Productionda esa chegaralar model kalibrovkasi va biznes talablari asosida tasdiqlanadi.
+
+5. MA’LUMOTLAR SIFATI MODULI
+
+Har bir kelgan ma’lumot quyidagi mezonlar bo‘yicha tekshiriladi:
+- To‘liqlik;
+- To‘g‘rilik;
+- Yagonalik;
+- Muvofiqlik;
+- Dolzarblik;
+- Mantiqiy to‘g‘rilik.
+
+Masalan: transaction_date > current_date bo‘lishi mumkin emas.
+
+Har bir dataset uchun Data Quality Score: 0–100 hisoblanishi mumkin.
+
+Muhim qoida: ma’lumot sifati juda past bo‘lsa, sun’iy intellekt natijasi ishonchli deb ko‘rsatilmaydi.
+
+6. SUBYEKTLARNI YAGONA IDENTIFIKATSIYALASH
+
+Turli ma’lumot manbalaridan “ABC MCHJ”, “ABC МЧЖ”, “ABC LLC”, “ABC” ko‘rinishida kelishi mumkin.
+
+Shu sababli Entity Resolution moduli zarur.
+
+U STIR, nomi, manzili, rahbar, telefon va tashkilot turi kabi belgilar asosida yozuvlarni bir subyektga bog‘laydi.
+
+Natija:
+internal_subject_id = SUB-000001
+
+Barcha tahlil shu ichki identifikator orqali bajariladi.
+
+7. MA’LUMOT KELIB CHIQISHINI KUZATISH
+
+Har bir muhim ko‘rsatkich uchun:
+- qayerdan keldi;
+- qachon keldi;
+- qaysi fayl/API;
+- qanday o‘zgartirildi;
+- qaysi versiyada hisoblandi
+saqlanishi kerak.
+
+Yangi jadval:
+data_lineage
+id
+source_id
+source_record_id
+target_table
+target_record_id
+transformation
+processed_at
+pipeline_version
+
+Bu “RASAD bu natijani qaysi ma’lumot asosida chiqardi?” degan savolga aniq javob beradi.
+
+8. MA’LUMOTNI QAYTA ISHLASH BOSQICHLARI
+
+DATA SOURCE
+ ↓
+INGESTION
+ ↓
+SCHEMA VALIDATION
+ ↓
+DATA QUALITY
+ ↓
+DEDUPLICATION
+ ↓
+ENTITY RESOLUTION
+ ↓
+NORMALIZATION
+ ↓
+ANONYMIZATION
+ ↓
+RAW STORAGE
+ ↓
+CURATED STORAGE
+ ↓
+FEATURE ENGINEERING
+ ↓
+MODEL
+ ↓
+RISK ENGINE
+ ↓
+EXPLANATION
+ ↓
+HUMAN REVIEW
+ ↓
+DECISION
+
+9. MA’LUMOT QATLAMLARI
+
+RAW — manbadan qanday kelgan bo‘lsa, shunday saqlanadi.
+CLEAN — tozalangan va standartlashtirilgan ma’lumot.
+ANALYTICS — SI va tahlil uchun tayyor ma’lumot.
+
+10. BELGILAR REESTRI
+
+feature_registry
+feature_id
+feature_name
+description
+source
+formula
+version
+created_at
+status
+
+Misollar:
+turnover_change_30d
+transaction_count_ratio
+peer_deviation_score
+network_risk_score
+seasonality_deviation
+
+11. MODEL REGISTRY
+
+model_registry
+model_id
+name
+version
+algorithm
+training_dataset
+features
+metrics
+threshold
+created_at
+created_by
+approved_by
+status
+
+Holatlar:
+DRAFT
+TESTING
+APPROVED
+ACTIVE
+ARCHIVED
+
+Tekshirilmagan model ACTIVE bo‘la olmaydi.
+
+12. MODELNING HAYOT SIKLI
+
+DATA → TRAIN → VALIDATE → REVIEW → APPROVE → DEPLOY → MONITOR → RETRAIN
+
+13. MODEL DRIFT
+
+RASAD quyidagilarni kuzatishi kerak:
+- ma’lumot taqsimoti o‘zgarishi;
+- prognoz taqsimoti o‘zgarishi;
+- anomaliyalar soni o‘zgarishi;
+- ekspert rad etishlari ko‘payishi.
+
+Agar belgilangan chegaradan oshsa: “Modelni qayta tekshirish talab etiladi” ogohlantirishi chiqadi.
+
+14. EKSPERT QAYTA ALOQA MEXANIZMI
+
+Tasdiqlandi — xavf haqiqatan muhim.
+Rad etildi — model noto‘g‘ri belgilagan.
+Qo‘shimcha ma’lumot kerak — yetarli dalil yo‘q.
+Tekshiruvga yuborildi — qo‘shimcha tahlil talab qilinadi.
+
+15. XAVF BAHOSIDA ISHONCH DARAJASI
+
+Masalan:
+Xavf: 82/100
+Ishonch: yuqori
+
+Agar ma’lumot yetarli bo‘lmasa:
+Xavf: 82
+Ishonch: past
+
+16. XAVF SABABLARINING STANDART FORMATI
+
+factor
+current_value
+baseline
+deviation
+impact
+source
+
+Masalan:
+Omil: Aylanma o‘zgarishi
+Hozirgi: -68%
+Kutilgan: -10% ... +15%
+Ta’siri: +21 risk ball
+
+17. ASINXRON VAZIFALAR
+
+Celery / RQ / Arq kabi vazifalar navbati yoki boshqa o‘xshash mexanizm kerak.
+
+API → QUEUE → WORKER → MODEL → DATABASE
+
+Holatlar:
+QUEUED
+RUNNING
+COMPLETED
+FAILED
+
+18. API VERSIYALASH
+
+/api/v1/
+
+Misollar:
+GET /api/v1/subjects
+GET /api/v1/subjects/{id}
+GET /api/v1/risk/{id}
+
+Keyingi versiya /api/v2/ eski integratsiyalarni buzmaydi.
+
+19. YAGONA API JAVOB FORMATI
+
+Muvaffaqiyatli:
+{
+  "success": true,
+  "data": {},
+  "error": null
+}
+
+Xato:
+{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "SUBJECT_NOT_FOUND",
+    "message": "Subyekt topilmadi"
+  }
+}
+
+20. XATOLAR KODLARI
+
+AUTH_001
+DATA_001
+MODEL_001
+RISK_001
+IMPORT_001
+REPORT_001
+SYSTEM_001
+
+21. RUXSATLAR MODELI
+
+Faqat RBAC emas, ayrim holatlarda ABAC ham kerak bo‘lishi mumkin.
+Masalan: tahlilchi faqat o‘ziga tegishli hudud ma’lumotlarini ko‘radi.
+Ruxsat Role + Region + Organization bo‘yicha tekshiriladi.
+
+22. MAXFIY KALITLARNI BOSHQARISH
+
+Quyidagilar kod ichida saqlanmasligi kerak:
+- DB password;
+- API token;
+- encryption key;
+- JWT secret.
+
+Productionda Vault, Kubernetes Secrets yoki cloud secret manager kabi mexanizm ishlatiladi.
+
+23. AUDIT TRAIL
+
+WHO
+WHEN
+WHAT
+OBJECT
+OLD VALUE
+NEW VALUE
+IP
+SESSION
+
+Muhim audit yozuvlari o‘zgartirilmasligi lozim.
+
+24. MONITORING
+
+Application metrics:
+- request count;
+- response time;
+- errors;
+- active users.
+
+Data metrics:
+- imported rows;
+- rejected rows;
+- data quality.
+
+Model metrics:
+- predictions;
+- anomalies;
+- confidence;
+- drift.
+
+Infrastructure:
+- CPU;
+- RAM;
+- disk;
+- network.
+
+Tavsiya: Prometheus + Grafana yoki shunga teng vosita.
+
+25. MARKAZLASHGAN LOGLASH
+
+Tavsiya: Loki / ELK / OpenSearch.
+Darajalar: INFO, WARNING, ERROR, CRITICAL.
+
+26. RPO VA RTO
+
+Pilot uchun misol:
+RPO ≤ 24 soat.
+RTO ≤ 4 soat.
+
+Production bosqichida talab kuchaytirilishi mumkin.
+
+27. ZAXIRA NUSXA SIYOSATI
+
+Kunlik — ma’lumotlar bazasi.
+Haftalik — to‘liq arxiv.
+Oylik — uzoq muddatli arxiv.
+
+Backup alohida saqlash muhitida saqlanishi kerak.
+
+28. MA’LUMOTLARNI SAQLASH SIYOSATI
+
+Har bir ma’lumot turi uchun:
+Data type
+Retention period
+Archive period
+Deletion policy
+belgilanadi.
+
+29. AXBOROT XAVFSIZLIGI INSIDENTI
+
+Aniqlash → Izolyatsiya → Tahlil → Bartaraf etish → Tiklash → Hisobot
+
+Har bir insidentga noyob identifikator beriladi.
+
+30. MUHITLAR
+
+DEV — dasturchilar uchun.
+STAGING — test va qabul uchun.
+PRODUCTION — ishchi tizim.
+
+Production ma’lumotlari DEVga ko‘chirilmasligi kerak.
+
+31. CI/CD
+
+Git → Code Review → Automated Tests → Build → Security Scan → Deploy Staging → Approval → Production
+
+32. KOD SIFATI
+
+Majburiy:
+- code review;
+- unit tests;
+- lint;
+- type checking;
+- dependency scan;
+- migration control.
+
+33. MA’LUMOTLAR BAZASI MIGRATSIYASI
+
+Sxema o‘zgarishi Alembic yoki tenglashtirilgan migratsiya vositasi orqali amalga oshiriladi.
+Qo‘lda production DB o‘zgartirish taqiqlanadi.
+
+34. KESHLASH
+
+Dashboard, region summary, dictionary va model metadata ma’lumotlari Redis orqali keshlanishi mumkin.
+Kesh eskirib qolmasligi uchun TTL belgilanadi.
+
+35. GEOGRAFIK MA’LUMOTLAR
+
+RASAD xaritasi uchun PostgreSQLga PostGIS qo‘shish maqsadga muvofiq.
+Shunda hudud chegaralari, geografik agregatlar, koordinatalar va spatial query ishlaydi.
+
+36. QIDIRUV
+
+Kichik hajmda PostgreSQL.
+Katta hajmda OpenSearch / Elasticsearch qo‘shilishi mumkin.
+
+37. HISOBOTLARNING ISHONCHLILIGI
+
+Har bir hisobotda:
+- generation ID;
+- sana;
+- ma’lumot davri;
+- model version;
+- data version;
+- generated by
+ko‘rsatiladi.
+
+38. FOYDALANUVCHI INTERFEYSIDA MUHIM OGOHLANTIRISH
+
+“Mazkur baho avtomatik tahlil natijasi bo‘lib, yakuniy huquqiy xulosa hisoblanmaydi.”
+
+39. ACCESSIBILITY
+
+Interfeys:
+- katta shriftlarda o‘qiladigan;
+- keyboard navigation;
+- rang ko‘rmaydigan foydalanuvchilar uchun ham tushunarli;
+- kontrast yetarli
+bo‘lishi kerak.
+
+Xavf darajasi faqat rang bilan emas, icon + text + color bilan beriladi.
+
+40. ISHLASH UNUMDORLIGI BO‘YICHA TALAB
+
+95-protsentil bo‘yicha:
+Login — ≤1 sek
+Dashboard — ≤2 sek
+Subject list — ≤2 sek
+Subject card — ≤2 sek
+Search — ≤1 sek
+Filter — ≤2 sek
+Report generation — ≤30 sek
+Background analysis — vazifaga bog‘liq
+
+41. YUKLAMA SINOVI
+
+Pilot: 50 bir vaqtdagi foydalanuvchi.
+Production: kamida 500 bir vaqtdagi foydalanuvchigacha masshtablash imkoniyati.
+
+42. TO‘LDIRILGAN QABUL MEZONLARI
+
+AC-01 Foydalanuvchi tizimga kira oladi.
+AC-02 Kamida 5 000 ta sinov subyekti import qilinadi.
+AC-03 14 hudud xaritada chiqadi.
+AC-04 Hududni bosganda filtr ishlaydi.
+AC-05 Subyekt kartasi ≤2 sekundda ochiladi.
+AC-06 Model real hisob bajaradi.
+AC-07 Kamida 1 anomaliya algoritmi ishlaydi.
+AC-08 Xavf sababi kamida 3 omil bilan chiqadi.
+AC-09 Ekspert qarori DBga saqlanadi.
+AC-10 Hisobot eksport qilinadi.
+AC-11 Harakat audit jurnalga tushadi.
+AC-12 MVP demo boshidan oxirigacha xatosiz bajariladi.
+
+43. DEMO UCHUN “GOLDEN PATH”
+
+1. RASAD bosh sahifasi.
+2. O‘zbekiston xaritasidan hudud tanlash.
+3. Yuqori xavfli subyektlarni ochish.
+4. Bir subyektni tanlash.
+5. Risk = 82/100.
+6. “Nega?” tugmasi.
+7. 3 ta asosiy omil.
+8. Vaqt grafigi.
+9. Bog‘langan subyektlar.
+10. SI tushuntirishi.
+11. Ekspert qarori.
+12. Hisobot.
+
+44. TEXNIK ARXITEKTURANING TO‘LDIRILGAN VARIANTI
+
+                         USER
+                           │
+                           ▼
+                   WEB APPLICATION
+                           │
+                           ▼
+                      API GATEWAY
+                           │
+           ┌───────────────┼────────────────┐
+           │               │                │
+           ▼               ▼                ▼
+        AUTH           CORE API         REPORTING
+           │               │
+           │               ▼
+           │           JOB QUEUE
+           │               │
+           │               ▼
+           │           AI WORKERS
+           │          ┌────┼─────┐
+           │          ▼    ▼     ▼
+           │       RISK ANOMALY GRAPH
+           │
+           ▼
+      AUTH DATABASE
+                           │
+            ┌──────────────┼──────────────┐
+            ▼              ▼              ▼
+       PostgreSQL        Redis        Object Storage
+            │
+            ▼
+          PostGIS
+            │
+            ▼
+       Analytics DB
+     (kelajak bosqichi)
+
+45. TAVSIYA ETILADIGAN YAKUNIY TEXNOLOGIK STEK
+
+Foydalanuvchi qismi:
+Vue 3
+TypeScript
+Pinia
+Vue Router
+ECharts
+MapLibre
+
+Server:
+Python
+FastAPI
+Pydantic
+SQLAlchemy
+Alembic
+
+Data:
+PostgreSQL
+PostGIS
+Redis
+
+AI:
+Pandas / Polars
+Scikit-learn
+LightGBM
+XGBoost
+NetworkX
+SHAP
+
+Background:
+Celery + Redis
+
+yoki yengil MVP uchun:
+FastAPI BackgroundTasks / ARQ
+
+Infra:
+Docker
+Nginx
+Git
+CI/CD
+
+46. PAPKALAR ARXITEKTURASI
+
+rasad/
+│
+├── frontend/
+├── backend/
+│   ├── api/
+│   ├── auth/
+│   ├── models/
+│   ├── schemas/
+│   ├── services/
+│   ├── repositories/
+│   ├── risk/
+│   ├── ai/
+│   ├── reports/
+│   ├── audit/
+│   └── integrations/
+│
+├── workers/
+│
+├── ml/
+│   ├── features/
+│   ├── training/
+│   ├── inference/
+│   ├── explainability/
+│   └── evaluation/
+│
+├── data/
+├── migrations/
+├── tests/
+├── docker/
+└── docs/
+
+47. ENG MUHIM QO‘SHIMCHA: RASAD CORE
+
+Butun tizimning markazida alohida RASAD Risk Engine bo‘lishi kerak.
+
+Input
+  ↓
+Feature Vector
+  ↓
+Rules
+  +
+Supervised Model
+  +
+Anomaly Model
+  +
+Time Model
+  +
+Graph Model
+  ↓
+Calibration
+  ↓
+Risk Score
+  ↓
+Explanation
+
+Bu arxitektura RASADni oddiy “Dashboard + AI” loyihasidan ajratadi.
+
+48. RASADNING MAHSULOT SIFATIDAGI ANIQ TA’RIFI
+
+RASAD — ko‘p manbali iqtisodiy ma’lumotlarni yagona muhitda qayta ishlab, subyekt, hudud va tarmoq kesimida g‘ayrioddiy holatlar hamda xavf signallarini aniqlaydigan, ularni ustuvorlashtiradigan, sabablarini izohlaydigan va ekspert qarorini qo‘llab-quvvatlaydigan intellektual tahlil platformasidir.
+
+YAKUNIY MUHIM TUZATISH
+
+Avvalgi TZda RASAD asosan:
+“ma’lumot → model → xavf”
+sifatida ko‘ringan edi.
+
+Mukammal arxitekturada esa:
+“ma’lumot sifati → subyektni aniqlash → belgilar → bir nechta model → kalibrovka → xavf → ishonch darajasi → tushuntirish → ekspert qarori → qayta aloqa → model monitoringi”
+to‘liq zanjiri bo‘lishi kerak.
+
+Shu to‘ldirishlardan keyin TZ endi faqat xakaton konsepsiyasi emas, RASADni haqiqiy davlat/korporativ darajadagi intellektual axborot tizimi sifatida ishlab chiqishga asos bo‘ladigan texnik spetsifikatsiyaga yaqinlashadi.

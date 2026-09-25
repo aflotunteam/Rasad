@@ -1,0 +1,1152 @@
+PROJECT:
+RASAD
+
+ROLE:
+Act simultaneously as:
+- senior enterprise product designer,
+- lead UX architect,
+- senior frontend engineer,
+- data-visualization specialist,
+- AI product architect,
+- economic risk analytics specialist,
+- security-aware government systems designer.
+
+Your task is to design and implement a polished, functional MVP of RASAD.
+
+==================================================
+1. PRODUCT DEFINITION
+==================================================
+
+RASAD is an intelligent economic-risk analysis and decision-support platform.
+
+Its purpose is to:
+
+1. combine economic data from multiple authorized sources;
+2. validate and assess data quality;
+3. identify unusual patterns, deviations and risk signals;
+4. calculate a configurable analytical risk score;
+5. show the confidence of that result;
+6. explain the main factors behind the score;
+7. analyse time dynamics, peer deviations and relationships;
+8. prioritise cases requiring human attention;
+9. allow an authorised expert to review the result;
+10. record the expert’s final operational decision.
+
+CORE PRINCIPLE:
+
+RASAD does NOT determine guilt.
+RASAD does NOT automatically declare a business illegal.
+RASAD does NOT make a final legal decision.
+
+RASAD answers:
+
+“Qaysi holat qo‘shimcha ekspert tahlilini birinchi navbatda talab qiladi va nima sababdan?”
+
+The final decision remains with an authorised human expert.
+
+==================================================
+2. LANGUAGE
+==================================================
+
+Every visible interface label, title, description, alert, tooltip, form and report must use:
+
+Professional academic Uzbek
+Latin script
+
+Use natural Uzbek equivalents instead of unnecessary foreign terms.
+
+Examples:
+
+Dashboard → Bosh sahifa / Boshqaruv oynasi
+Risk → Xavf
+Alert → Ogohlantirish
+Report → Hisobot
+Data source → Ma’lumot manbasi
+Confidence → Ishonch darajasi
+Relationship → Aloqadorlik
+User → Foydalanuvchi
+Settings → Sozlamalar
+
+Technology names such as PostgreSQL, FastAPI, Vue, Redis and LightGBM may remain unchanged.
+
+No spelling mistakes.
+No mixed Cyrillic/Latin.
+No meaningless filler text.
+
+==================================================
+3. VISUAL IDENTITY
+==================================================
+
+Create a distinctive RASAD visual system.
+
+STYLE:
+
+Premium institutional analytics.
+Modern Uzbek digital-government quality.
+Clean enterprise intelligence platform.
+Calm, precise, evidence-oriented.
+
+The product must feel suitable for:
+- government institutions;
+- financial organisations;
+- enterprise risk teams;
+- professional analysts.
+
+DO NOT USE:
+- cyberpunk;
+- black gaming interface;
+- excessive neon;
+- uncontrolled gradients;
+- cartoon illustrations;
+- futuristic hologram clichés;
+- crypto-style visuals;
+- oversized decorative graphics;
+- generic SaaS templates.
+
+VISUAL MOOD:
+
+“Precision + trust + intelligence + control.”
+
+==================================================
+4. CORE DESIGN TOKENS
+==================================================
+
+Background:
+#F5F9FD
+
+Primary surface:
+#FFFFFF
+
+Primary navy:
+#0B1F3A
+
+Primary blue:
+#216DF3
+
+Analytical cyan:
+#38BDF8
+
+Secondary text:
+#607087
+
+Borders:
+#DDE7F0
+
+High-priority risk:
+#D9534F
+
+Medium:
+#D99B22
+
+Low:
+#2FA36B
+
+Information:
+#2878FF
+
+IMPORTANT:
+
+Red, amber and green are SEMANTIC colours only.
+Never use them as decorative brand colours.
+
+==================================================
+5. TYPOGRAPHY
+==================================================
+
+Use a professional font with excellent Uzbek Latin support:
+
+Inter
+or
+IBM Plex Sans.
+
+Use:
+strong but restrained headings;
+clear metric typography;
+tabular numerals;
+high legibility.
+
+Do not use giant marketing-style headings inside operational pages.
+
+==================================================
+6. APPLICATION SHELL
+==================================================
+
+Desktop-first application.
+
+Primary resolution:
+1440×900
+
+Must look excellent at:
+1920×1080.
+
+Use a 12-column grid.
+
+LEFT SIDEBAR:
+approximately 240–260 px.
+
+TOP BAR:
+global search,
+current period,
+data freshness,
+notifications,
+profile.
+
+MAIN CONTENT:
+wide analytical workspace.
+
+OPTIONAL RIGHT DRAWER:
+contextual explanations,
+risk details,
+expert actions.
+
+Navigation:
+
+Bosh sahifa
+Hududlar
+Subyektlar
+Tahlillar
+Aloqadorliklar
+Ogohlantirishlar
+Hisobotlar
+Ma’lumot manbalari
+Modellar
+Audit
+Foydalanuvchilar
+Sozlamalar
+
+==================================================
+7. DASHBOARD — MOST IMPORTANT EXECUTIVE SCREEN
+==================================================
+
+The dashboard must immediately answer:
+
+1. What is happening?
+2. Where is it happening?
+3. What needs attention first?
+4. Why?
+
+TOP KPI STRIP:
+
+- Tahlil qilingan subyektlar
+- Yuqori ustuvorlikdagi holatlar
+- Yangi ogohlantirishlar
+- O‘rtacha ma’lumot sifati
+- Faol model
+- Oxirgi yangilanish
+
+Do not fabricate official statistics.
+
+All demo metrics must be clearly synthetic.
+
+Place visible badge:
+
+“NAMOYISH MA’LUMOTLARI — SINTETIK”
+
+==================================================
+8. UZBEKISTAN MAP
+==================================================
+
+The Uzbekistan map must be geographically correct.
+
+Never generate a decorative or distorted Uzbekistan silhouette.
+
+Use:
+GeoJSON + MapLibre,
+or an equivalent reliable geographic layer.
+
+Represent:
+
+Qoraqalpog‘iston Respublikasi
+12 viloyat
+Toshkent shahri
+
+14 administrative units total.
+
+Map hover:
+
+Hudud
+Subyektlar soni
+Analitik xavf ko‘rsatkichi
+Yangi ogohlantirishlar
+Ma’lumot yangilangan vaqt
+
+Map click:
+
+filters the whole dashboard
+and opens regional drill-down.
+
+CRITICAL RULE:
+
+Official statistical indicators and the RASAD analytical risk score are two different concepts.
+
+Never visually present them as the same metric.
+
+==================================================
+9. RISK ENGINE VISUAL LOGIC
+==================================================
+
+The core product must visibly communicate the RASAD analytical chain:
+
+MA’LUMOT SIFATI
+→
+SUBYEKTNI MOSLASHTIRISH
+→
+TAHLILIY BELGILAR
+→
+MODELLAR
+→
+KALIBRLASH
+→
+XAVF BAHOSI
+→
+ISHONCH DARAJASI
+→
+SABABLAR
+→
+EKSPERT QARORI
+
+This is the conceptual heart of RASAD.
+
+The product must not feel like:
+“dashboard + random AI”.
+
+==================================================
+10. RISK TAXONOMY
+==================================================
+
+Implement:
+
+R01 — Faoliyat dinamikasi
+R02 — Sohaviy og‘ish
+R03 — Hududiy og‘ish
+R04 — Operatsion noodatiylik
+R05 — Aloqadorlik xavfi
+R06 — Ma’lumotlar ziddiyati
+R07 — Davriy xavf
+R08 — Kompleks xavf
+
+Each type should have:
+code,
+name,
+icon,
+short explanation.
+
+==================================================
+11. RISK SCORE
+==================================================
+
+Risk is shown as:
+
+0–100 analytical score.
+
+Default MVP thresholds may be:
+
+0–39 Past
+40–69 O‘rta
+70–100 Yuqori
+
+BUT:
+
+explicitly mark these as configurable MVP thresholds.
+
+Do not claim that these thresholds are scientifically validated.
+
+Settings must contain:
+“Xavf chegaralari”
+
+where authorised administrators can change them.
+
+==================================================
+12. DATA QUALITY MUST AFFECT TRUST
+==================================================
+
+Data quality dimensions:
+
+To‘liqlik
+To‘g‘rilik
+Yagonalik
+Muvofiqlik
+Dolzarblik
+Mantiqiy to‘g‘rilik
+
+Display:
+
+Ma’lumot sifati: 87/100
+
+If quality is poor:
+
+show a strong but calm warning:
+
+“Ma’lumot sifati past. Natijani ehtiyotkorlik bilan talqin qilish talab etiladi.”
+
+The UI must visually show this relationship:
+
+LOW DATA QUALITY
+→
+LOWER CONFIDENCE
+
+Never visually imply that a high risk score is automatically highly reliable.
+
+==================================================
+13. SUBJECT LIST
+==================================================
+
+Build a dense but elegant enterprise table.
+
+Columns:
+
+Ichki kod
+Hudud
+Faoliyat turi
+Xavf bahosi
+Ishonch
+Asosiy xavf turi
+Ma’lumot sifati
+Ekspert holati
+Oxirgi tahlil
+
+Filters:
+
+Hudud
+Faoliyat
+Xavf darajasi
+Xavf turi
+Davr
+Ekspert holati
+Ma’lumot sifati
+
+Features:
+
+sort
+pagination
+column visibility
+search
+saved filter
+export
+
+==================================================
+14. SUBJECT DETAIL — CORE ANALYST SCREEN
+==================================================
+
+Top summary:
+
+SUB-000125
+
+Hudud
+Faoliyat turi
+Tahlil davri
+Oxirgi hisob
+Model versiyasi
+
+Primary risk block:
+
+Xavf bahosi:
+82 / 100
+
+IMPORTANT:
+This number is DEMO SYNTHETIC DATA.
+
+Show separately:
+
+Ishonch:
+Yuqori / O‘rta / Past
+
+Ma’lumot sifati:
+87/100
+
+Do not merge these indicators.
+
+==================================================
+15. “NEGA?” EXPLANATION
+==================================================
+
+Create a highly visible action:
+
+“NEGA?”
+
+When clicked, open a polished explanation drawer.
+
+Show top contributing factors.
+
+Example structure:
+
+Aylanma o‘zgarishi
+
+Joriy:
+−68%
+
+Kutilgan:
+−10% ... +15%
+
+Og‘ish:
+yuqori
+
+Xavfga ta’siri:
++21 ball
+
+Manba:
+synthetic_demo_transactions_v1
+
+Show contribution bars.
+
+Do not allow the natural-language AI explanation to invent numbers.
+
+==================================================
+16. AI EXPLANATION SAFETY
+==================================================
+
+The language model is ONLY allowed to convert already calculated structured analytical results into understandable Uzbek text.
+
+It must NEVER:
+- generate the risk score;
+- invent statistics;
+- invent a source;
+- invent a business fact;
+- declare guilt.
+
+UI text:
+
+“Sun’iy intellekt izohi hisoblangan tahliliy natijalar asosida shakllantirilgan.”
+
+==================================================
+17. TIME ANALYSIS
+==================================================
+
+Create:
+
+12–24 month line chart.
+
+Overlay:
+subject value
+peer baseline
+expected range
+
+Highlight:
+detected deviation.
+
+Tooltip must show:
+date
+value
+baseline
+deviation.
+
+==================================================
+18. PEER COMPARISON
+==================================================
+
+Compare subject to:
+- same sector;
+- same region;
+- comparable-size subjects.
+
+Use:
+percentile,
+distribution,
+or horizontal benchmark chart.
+
+Do not use misleading 3D charts.
+
+==================================================
+19. RELATIONSHIP NETWORK
+==================================================
+
+Interactive graph.
+
+Nodes:
+subjects.
+
+Edges:
+known relationships.
+
+Show:
+relationship type
+weight
+risk context
+
+Capabilities:
+zoom
+pan
+expand
+collapse
+filter
+select
+focus risky path
+
+Do not show a meaningless “spaghetti graph”.
+
+Default view should simplify peripheral nodes.
+
+==================================================
+20. EXPERT DECISION
+==================================================
+
+No automated result is final.
+
+Expert actions:
+
+Tasdiqlandi
+Rad etildi
+Qo‘shimcha ma’lumot kerak
+Tekshiruvga yuborildi
+
+Require:
+comment.
+
+Record:
+user,
+timestamp,
+decision,
+comment.
+
+Show a decision timeline.
+
+Permanent disclaimer:
+
+“Mazkur baho avtomatik tahlil natijasi bo‘lib, yakuniy huquqiy xulosa hisoblanmaydi.”
+
+==================================================
+21. ALERT CENTRE
+==================================================
+
+Statuses:
+
+Yangi
+Ko‘rib chiqilmoqda
+Tasdiqlandi
+Rad etildi
+Yopildi
+
+Each alert:
+
+severity
+subject
+risk type
+region
+detected time
+analyst
+status
+
+Add:
+bulk filter
+assignment
+status change
+open subject.
+
+==================================================
+22. DATA SOURCE MANAGEMENT
+==================================================
+
+Data source cards/table:
+
+Nomi
+Turi
+Holati
+Oxirgi yuklash
+Qatorlar
+Rad etilgan
+Sifat bahosi
+Xato
+
+Statuses:
+
+Faol
+Kechikkan
+Xatolik
+O‘chirilgan
+
+==================================================
+23. IMPORT WIZARD
+==================================================
+
+Create a complete data import workflow:
+
+1. Fayl tanlash
+2. Tuzilmani tekshirish
+3. Ustunlarni moslashtirish
+4. Ma’lumot sifatini tekshirish
+5. Takroriy yozuvlarni aniqlash
+6. Import tasdig‘i
+7. Natija
+
+Supported demo formats:
+
+CSV
+XLSX
+JSON
+
+Show:
+accepted
+rejected
+duplicates
+validation errors.
+
+==================================================
+24. MODEL REGISTRY
+==================================================
+
+Table:
+
+Model
+Versiya
+Algoritm
+Holat
+Tasdiqlangan sana
+Sifat ko‘rsatkichlari
+Drift
+Tasdiqlagan shaxs
+
+Status:
+
+Qoralama
+Sinovda
+Tasdiqlangan
+Faol
+Arxivlangan
+
+Rule:
+
+Only approved models may become active.
+
+==================================================
+25. MODEL MONITORING
+==================================================
+
+Create:
+
+Model holati
+Ma’lumot og‘ishi
+Natija taqsimoti
+Ishonch dinamikasi
+Ekspert rad etish darajasi
+Noodatiy holatlar soni
+
+If threshold exceeded:
+
+“Modelni qayta tekshirish talab etiladi.”
+
+==================================================
+26. REPORTS
+==================================================
+
+Types:
+
+Subyekt hisoboti
+Hududiy hisobot
+Tarmoq hisoboti
+Xavf turi hisoboti
+Davriy hisobot
+
+Report metadata:
+
+Hisobot raqami
+Yaratilgan vaqt
+Ma’lumot davri
+Model versiyasi
+Ma’lumot versiyasi
+Yaratgan foydalanuvchi
+
+Actions:
+
+PDF
+XLSX
+CSV
+
+==================================================
+27. AUDIT
+==================================================
+
+Create an immutable-looking professional audit table:
+
+Kim
+Qachon
+Amal
+Obyekt
+Oldingi qiymat
+Yangi qiymat
+IP
+Sessiya
+
+Allow:
+date filter
+user filter
+action filter.
+
+==================================================
+28. ROLES
+==================================================
+
+Administrator
+Tahlilchi
+Rahbar
+Auditor
+
+The UI must change based on role.
+
+Examples:
+
+Auditor cannot change model thresholds.
+
+Analyst cannot manage users.
+
+Manager sees executive metrics but not system configuration.
+
+==================================================
+29. SECURITY UX
+==================================================
+
+Protected identifiers should be masked by default.
+
+Example:
+
+STIR:
+*** *** 412
+
+Show protected values only if the current role is allowed.
+
+Never include real personal data in the demo.
+
+==================================================
+30. SYNTHETIC DATA
+==================================================
+
+Generate deterministic synthetic demo data.
+
+Requirements:
+
+5,000 subjects
+14 administrative areas
+10+ economic activity categories
+12–24 months history
+normal cases
+synthetic anomalies
+synthetic relationship clusters
+
+No real company names.
+No real STIR.
+No real citizen information.
+
+Clearly label demo data.
+
+==================================================
+31. NO FABRICATION RULE
+==================================================
+
+STRICT:
+
+Do NOT invent:
+- official Uzbekistan statistics;
+- real tax indicators;
+- real market size;
+- actual model accuracy;
+- actual customer numbers;
+- official government KPIs;
+- investment figures.
+
+When a real validated value is unavailable, use:
+
+“Ma’lumot mavjud emas”
+
+or
+
+“Sinov ko‘rsatkichi”
+
+instead.
+
+==================================================
+32. EMPTY / ERROR STATES
+==================================================
+
+Design polished states for:
+
+Ma’lumot mavjud emas
+Yuklanmoqda
+Qisman ma’lumot
+Ma’lumot eskirgan
+Ruxsat mavjud emas
+Model mavjud emas
+Hisobot yaratilmoqda
+Import xatosi
+Server xatosi
+
+Never leave blank areas.
+
+==================================================
+33. ACCESSIBILITY
+==================================================
+
+WCAG-aware design.
+
+Risk must use:
+
+colour
++
+icon
++
+text
+
+Never colour alone.
+
+Strong focus states.
+Keyboard navigation.
+Readable contrast.
+Minimum comfortable font size.
+
+==================================================
+34. MICROINTERACTIONS
+==================================================
+
+Use subtle 150–250 ms transitions.
+
+Examples:
+
+sidebar state
+filter selection
+card hover
+table row hover
+map region hover
+drawer opening
+chart tooltip
+status update
+
+Do not animate analytical charts unnecessarily.
+
+==================================================
+35. MVP PRIORITY
+==================================================
+
+BUILD FIRST:
+
+P0 — absolutely required:
+
+1. Login
+2. Dashboard
+3. Correct Uzbekistan map
+4. Subject list
+5. Subject detail
+6. Risk score
+7. Data quality
+8. Confidence
+9. “Nega?” explanation
+10. One anomaly model demo
+11. Time chart
+12. Relationship graph
+13. Expert decision
+14. Report preview
+15. Synthetic-data badge
+
+P1 — next:
+
+Alerts
+Data-source import
+Model registry
+Audit
+
+P2 — production-oriented:
+
+Advanced model drift
+Full role administration
+Background jobs UI
+Retention configuration
+Infrastructure monitoring
+
+Do not sacrifice P0 quality to implement P2.
+
+==================================================
+36. GOLDEN DEMO FLOW
+==================================================
+
+The final prototype MUST successfully demonstrate:
+
+Bosh sahifa
+→
+O‘zbekiston xaritasi
+→
+Namangan viloyati
+→
+Yuqori ustuvorlikdagi holatlar
+→
+SUB-000125
+→
+Xavf: 82/100
+→
+NEGA?
+→
+3 ta asosiy sabab
+→
+Vaqt bo‘yicha og‘ish
+→
+Aloqadorliklar
+→
+SI izohi
+→
+Ekspert qarori
+→
+Hisobot
+
+Every transition should be clickable and functional.
+
+==================================================
+37. COMPONENT ARCHITECTURE
+==================================================
+
+Create reusable components:
+
+AppShell
+Sidebar
+TopBar
+GlobalSearch
+MetricCard
+RiskBadge
+ConfidenceBadge
+DataQualityBadge
+UzbekistanMap
+RiskTrendChart
+SectorRiskChart
+SubjectTable
+FilterBar
+RiskScorePanel
+RiskFactorList
+ExplanationDrawer
+TimeSeriesChart
+PeerBenchmark
+RelationshipGraph
+ExpertDecisionPanel
+AlertTable
+ImportWizard
+ModelTable
+AuditTable
+ReportPreview
+EmptyState
+ErrorState
+LoadingSkeleton
+
+==================================================
+38. FRONTEND TECHNOLOGY
+==================================================
+
+Preferred:
+
+Vue 3
+TypeScript
+Pinia
+Vue Router
+ECharts
+MapLibre GL
+
+Use reusable typed services.
+
+Separate:
+
+components
+pages
+stores
+services
+types
+utils
+data
+
+Do not place the whole application into one monolithic component.
+
+==================================================
+39. BACKEND-READY CONTRACT
+==================================================
+
+Structure mock data as though it comes from:
+
+/api/v1/dashboard
+/api/v1/regions
+/api/v1/subjects
+/api/v1/subjects/{id}
+/api/v1/subjects/{id}/risk
+/api/v1/subjects/{id}/factors
+/api/v1/subjects/{id}/relations
+/api/v1/alerts
+/api/v1/expert-decisions
+/api/v1/reports
+/api/v1/data-sources
+/api/v1/models
+/api/v1/audit
+
+Use a service abstraction so mock data can later be replaced by FastAPI without redesigning the UI.
+
+==================================================
+40. VISUAL QUALITY CHECK
+==================================================
+
+Before finishing, review every screen.
+
+Ask:
+
+Does this look like a serious enterprise analytical product?
+
+Is every number clearly identified?
+
+Is risk distinguishable from confidence?
+
+Is confidence distinguishable from data quality?
+
+Are official and analytical indicators separated?
+
+Is the Uzbekistan map geographically correct?
+
+Is anything decorative but unnecessary?
+
+Is any text too long?
+
+Is the interface visually exhausting?
+
+Is red overused?
+
+Does the entire product use one consistent design system?
+
+Fix every issue before finalising.
+
+==================================================
+41. CONTENT QUALITY CHECK
+==================================================
+
+Verify all visible Uzbek text.
+
+Requirements:
+
+academic Uzbek;
+Latin script;
+correct apostrophes;
+correct spelling;
+short operational copy;
+no Russian text;
+no mixed English labels unless technically required.
+
+==================================================
+42. FINAL RESULT
+==================================================
+
+Deliver a polished functional RASAD MVP.
+
+The final product must make a reviewer immediately understand:
+
+WHAT:
+RASAD analyses economic risk signals.
+
+HOW:
+It combines multiple data sources and several analytical methods.
+
+WHY TRUST IT:
+It shows data quality, confidence and explanation.
+
+WHY SAFE:
+It never replaces the human expert.
+
+WHY VALUABLE:
+It helps specialists focus limited analytical resources on the cases requiring the most attention.
+
+The design must communicate:
+precision,
+trust,
+explainability,
+institutional maturity,
+technical depth.
+
+Do not build a generic dashboard.
+
+Build a distinctive professional product named RASAD.
