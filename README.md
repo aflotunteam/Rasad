@@ -1,26 +1,123 @@
 # RASAD
 
-> **NAMOYISH MA'LUMOTLARI — SINTETIK.** Loyihadagi barcha subyektlar, ko'rsatkichlar va natijalar sun'iy ravishda yaratilgan. Ular rasmiy statistika emas.
+> **NAMOYISH MA’LUMOTLARI — SINTETIK.** Loyihadagi barcha subyektlar, ko‘rsatkichlar va natijalar sun’iy yaratilgan. Ular rasmiy statistika emas, real korxona, STIR yoki fuqaro ma’lumotlari ishlatilmagan.
 
-RASAD — ko'p manbali iqtisodiy ma'lumotlarni yagona muhitda qayta ishlab, subyekt, hudud va tarmoq kesimida g'ayrioddiy holatlar hamda xavf signallarini aniqlaydigan, ularni ustuvorlashtiradigan, sabablarini izohlaydigan va ekspert qarorini qo'llab-quvvatlaydigan intellektual tahlil platformasi.
+RASAD — ko‘p manbali iqtisodiy ma’lumotlarni yagona muhitda qayta ishlab, subyekt, hudud va tarmoq kesimida g‘ayrioddiy holatlar hamda xavf signallarini aniqlaydigan, ularni ustuvorlashtiradigan, sabablarini izohlaydigan va ekspert qarorini qo‘llab-quvvatlaydigan intellektual tahlil platformasi.
 
-RASAD aybni aniqlamaydi va yakuniy huquqiy qaror chiqarmaydi. Yakuniy qaror vakolatli ekspertda qoladi.
+RASAD aybni aniqlamaydi va yakuniy huquqiy qaror chiqarmaydi. U quyidagi savolga javob beradi: *«Qaysi holat qo‘shimcha ekspert tahlilini birinchi navbatda talab qiladi va nima sababdan?»*
 
-## Tuzilma
+## Tez ishga tushirish (Windows)
 
-```
-frontend/   Vue 3 + TypeScript + Vite + Pinia + ECharts + MapLibre GL
-backend/    FastAPI + SQLAlchemy + Alembic (SQLite, PostgreSQL ga tayyor)
-ml/         Risk Engine: belgilar, modellar, kalibrlash, tushuntirish
-data/       Deterministik sintetik ma'lumot generatori
-docs/       Texnik topshiriq va dizayn manbalari
+Kerak bo‘ladi: Python 3.12+ va Node.js 20+.
+
+```powershell
+.\scripts\dev.ps1 -Install -Seed
 ```
 
-## Ishga tushirish
+Skript Python va npm paketlarini o‘rnatadi, bazani sintetik ma’lumot bilan to‘ldiradi hamda ikkala serverni ishga tushiradi:
 
-Ko'rsatmalar har bir faza yakunlanishi bilan to'ldiriladi.
+- Veb-ilova: http://localhost:5173
+- API hujjatlari (OpenAPI): http://127.0.0.1:8000/docs
 
-## Manbalar
+Keyingi safar `.\scripts\dev.ps1` buyrug‘ining o‘zi yetarli. `-Seed` bazani boshlang‘ich holatga qaytaradi: demo oldidan shuni ishga tushiring.
 
-- [Texnik topshiriq](docs/source/RASAD_TZ_toldirilgan.txt)
-- [UI/UX spetsifikatsiyasi](docs/source/rasad%20promt.txt)
+<details>
+<summary>Qo‘lda ishga tushirish</summary>
+
+```bash
+cd backend
+python -m venv .venv
+.venv/Scripts/pip install -r requirements.txt
+.venv/Scripts/python -m scripts.seed          # alembic upgrade + sintetik ma'lumot + Risk Engine
+.venv/Scripts/python -m uvicorn app.main:app --port 8000
+
+cd ../frontend
+npm install
+npm run dev                                    # /api so'rovlari 8000-portga proksi qilinadi
+```
+</details>
+
+## Namoyish hisoblari
+
+| Rol | Login | Parol | Imkoniyatlar |
+|---|---|---|---|
+| Administrator | `admin` | `Admin123!` | Barcha bo‘limlar, xavf chegaralari, modellar, foydalanuvchilar |
+| Tahlilchi | `tahlilchi` | `Tahlil123!` | Faqat Namangan viloyati; ekspert qarori, import |
+| Tahlilchi | `tahlilchi2` | `Tahlil123!` | Faqat Toshkent shahri |
+| Rahbar | `rahbar` | `Rahbar123!` | Boshqaruv ko‘rsatkichlari va hisobotlar; STIR maskalangan |
+| Auditor | `auditor` | `Audit123!` | Audit jurnali; sozlamalarni faqat ko‘rish |
+
+Parollar faqat lokal namoyish uchun. Login sahifasidagi ro‘yxatdan hisobni bosib tanlash mumkin.
+
+## Golden demo oqimi
+
+`admin` bilan kiring:
+
+1. **Bosh sahifa** → O‘zbekiston xaritasida **Namangan viloyati**ni bosing (butun sahifa filtrlanadi).
+2. **Yuqori ustuvorlikdagi holatlar** ro‘yxatidan **SUB-000125** ni oching.
+3. Xavf bahosi **≈ 82/100**, ishonch darajasi va ma’lumot sifati alohida ko‘rsatiladi.
+4. **NEGA?** → 3 ta asosiy sabab: aylanma o‘zgarishi (−65,8%), xavfli aloqadorlik, soliq yuklamasi.
+5. **Vaqt bo‘yicha og‘ish** → **Aloqadorliklar** («Xavfli yo‘lga fokus») → **SI izohi**.
+6. **Ekspert qarori** (izoh majburiy) → qaror tarixi va audit jurnalida ko‘rinadi.
+7. **Hisobot** → PDF, XLSX yoki CSV.
+
+## Arxitektura
+
+```
+frontend/   Vue 3 + TypeScript + Vite + Pinia + Vue Router + ECharts + MapLibre GL
+backend/
+  app/      FastAPI (/api/v1), SQLAlchemy 2, Alembic, JWT, RBAC/ABAC, audit, hisobotlar
+  ml/       Risk Engine: belgilar → qoidalar + Isolation Forest + vaqt + graf → kalibrlash → sabablar
+  data_gen/ Deterministik sintetik generator (5000 subyekt, 14 hudud, 11 soha, 24 oy)
+  scripts/  seed.py, make_samples.py
+  tests/    pytest (27 ta test)
+data/samples/  Import ustasi uchun namuna fayllar (qasddan qo‘yilgan xatolar bilan)
+docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
+```
+
+**Tahlil zanjiri:** ma’lumot sifati → subyektni moslashtirish → tahliliy belgilar → modellar → kalibrlash → xavf bahosi → ishonch darajasi → sabablar → ekspert qarori.
+
+- Har bir omilning ta’siri yakuniy bahoga proporsional taqsimlanadi. «NEGA?» oynasidagi ballar yig‘indisi xavf bahosiga teng.
+- Ishonch darajasi ma’lumot sifati, tarix uzunligi, manbalar soni va modellar kelishuvidan hisoblanadi. Ma’lumot sifati 60 dan past bo‘lsa, ishonch «Past» dan oshmaydi.
+- SI izohi shablon asosida faqat hisoblangan natijalardan yasaladi. Til modeli ishlatilmaydi va yangi raqam yaratilmaydi.
+- API javoblari yagona formatda: `{"success", "data", "error"}`. Xato kodlari: `AUTH_*`, `DATA_*`, `MODEL_001`, `RISK_001`, `IMPORT_001`, `REPORT_001`, `SYSTEM_001`.
+
+## Qabul mezonlari (TZ §42)
+
+| # | Mezon | Holat |
+|---|---|---|
+| AC-01 | Foydalanuvchi tizimga kira oladi | ✔ JWT, 5 ta demo hisob |
+| AC-02 | Kamida 5 000 ta sinov subyekti | ✔ 5 000 |
+| AC-03 | 14 hudud xaritada chiqadi | ✔ geoBoundaries ADM1 |
+| AC-04 | Hududni bosganda filtr ishlaydi | ✔ |
+| AC-05 | Subyekt kartasi ≤ 2 s da ochiladi | ✔ lokalda ≈ 0,15 s |
+| AC-06 | Model real hisob bajaradi | ✔ baholar seed vaqtida hisoblanadi |
+| AC-07 | Kamida 1 anomaliya algoritmi | ✔ Isolation Forest |
+| AC-08 | Xavf sababi kamida 3 omil bilan | ✔ |
+| AC-09 | Ekspert qarori DB ga saqlanadi | ✔ |
+| AC-10 | Hisobot eksport qilinadi | ✔ PDF / XLSX / CSV |
+| AC-11 | Harakat audit jurnaliga tushadi | ✔ |
+| AC-12 | Demo boshidan oxirigacha xatosiz | ✔ avtomatik brauzer sinovida tekshirilgan |
+
+## Testlar
+
+```bash
+cd backend && .venv/Scripts/python -m pytest -q
+cd frontend && npm run typecheck && npm run build
+```
+
+## MVP cheklovlari (ochiq aytilgan)
+
+- **Ma’lumotlar sintetik.** Sifat ko‘rsatkichlari (AUC va boshqalar) sun’iy joylangan anomaliyalarga nisbatan o‘lchangan va real samaradorlikni anglatmaydi.
+- **Xavf chegaralari (40/70) shartli.** Ular ilmiy kalibrlanmagan va Sozlamalar → Xavf chegaralari bo‘limida o‘zgartiriladi.
+- **Baza: SQLite.** Sxema PostgreSQL/PostGIS ga ko‘chirishga tayyor, `DATABASE_URL` orqali almashtiriladi.
+- **Fon vazifalar: FastAPI BackgroundTasks.** Production uchun Celery + Redis tavsiya etiladi.
+- **Import RAW qatlamiga yuklanadi.** Tahlilga qo‘shish qayta hisoblash vazifasi orqali amalga oshiriladi.
+- **Kesh, Prometheus/Grafana, markazlashgan loglash, rezervlash** Pilot va Production bosqichlariga qoldirilgan (TZ §24–27).
+
+## Litsenziyalar va manbalar
+
+- Kod: [GPL-3.0](LICENSE)
+- Xarita chegaralari: [geoBoundaries](https://www.geoboundaries.org) gbOpen UZB ADM1 — © OpenStreetMap hissadorlari, ODbL 1.0
+- PDF shrifti: DejaVu Sans (erkin litsenziya)
+- [Texnik topshiriq](docs/source/RASAD_TZ_toldirilgan.txt) · [UI/UX spetsifikatsiyasi](docs/source/rasad%20promt.txt)

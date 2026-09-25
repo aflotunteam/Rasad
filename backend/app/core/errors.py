@@ -38,7 +38,7 @@ class AppError(Exception):
 class NotFound(AppError):
     status_code = 404
 
-    def __init__(self, message: str = "Ma'lumot topilmadi", code: str = ErrorCode.DATA_NOT_FOUND):
+    def __init__(self, message: str = "Ma’lumot topilmadi", code: str = ErrorCode.DATA_NOT_FOUND):
         super().__init__(code, message)
 
 
@@ -52,5 +52,5 @@ class Forbidden(AppError):
 class Unauthorized(AppError):
     status_code = 401
 
-    def __init__(self, message: str = "Avtorizatsiyadan o'tilmagan", code: str = ErrorCode.AUTH_TOKEN):
+    def __init__(self, message: str = "Avtorizatsiyadan o‘tilmagan", code: str = ErrorCode.AUTH_TOKEN):
         super().__init__(code, message)

@@ -17,8 +17,8 @@ settings = get_settings()
 app = FastAPI(
     title="RASAD API",
     version="0.1.0",
-    description="Iqtisodiy xavf signallarini tahlil qilish va ekspert qarorini qo'llab-quvvatlash platformasi. "
-    "Namoyish ma'lumotlari sintetik.",
+    description="Iqtisodiy xavf signallarini tahlil qilish va ekspert qarorini qo‘llab-quvvatlash platformasi. "
+    "Namoyish ma’lumotlari sintetik.",
 )
 
 app.add_middleware(
@@ -43,7 +43,7 @@ async def _validation_error(_: Request, exc: RequestValidationError):
     ]
     return JSONResponse(
         status_code=422,
-        content=fail(ErrorCode.DATA_VALIDATION, "Kiritilgan ma'lumotlar noto'g'ri", details),
+        content=fail(ErrorCode.DATA_VALIDATION, "Kiritilgan ma’lumotlar noto‘g‘ri", details),
     )
 
 

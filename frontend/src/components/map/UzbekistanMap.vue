@@ -105,11 +105,11 @@ function centroid(f: GeoJSON.Feature): [number, number] {
 
 // Kichik va zich hududlar uchun yorliq joyi qo'lda belgilanadi (bir-birini bosmasligi uchun).
 const LABEL_POS: Record<string, [number, number]> = {
-  TK: [69.0, 41.18],
+  TK: [69.25, 41.31],
   TO: [70.35, 41.95],
-  NG: [71.05, 41.12],
-  AN: [72.8, 40.86],
-  FA: [71.25, 40.3],
+  NG: [71.2, 41.0],
+  AN: [72.4, 40.75],
+  FA: [71.6, 40.4],
   SI: [68.72, 40.42],
   JI: [67.55, 40.22],
 }
