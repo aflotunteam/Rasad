@@ -26,3 +26,5 @@ desktop.ini
 frontend/node_modules/
 frontend/dist/
 *.tsbuildinfo
+*.db-shm
+*.db-wal
