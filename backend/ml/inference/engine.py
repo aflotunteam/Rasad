@@ -31,7 +31,7 @@ COMPONENTS: dict[str, tuple[str, float]] = {
     "network": ("R05", 12.0),
     "conflict": ("R06", 20.0),
     "seasonal": ("R07", 14.0),
-    "anomaly": ("R08", 10.0),
+    "anomaly": ("R08", 7.0),
 }
 CALIBRATION_SCALE = 42.0
 STRONG_SIGNAL = 0.6

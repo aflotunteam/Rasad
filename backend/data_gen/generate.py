@@ -151,7 +151,7 @@ def generate(n_subjects: int = 5000, seed: int = 2026, end: date = date(2026, 8,
                 turnover[tail] *= rng.uniform(2.2, 3.5)
             elif kind == "tax_low":
                 m = 6 if int(sid) == golden_id else int(rng.integers(6, 13))
-                tax[n_months - m:] *= 0.70 if int(sid) == golden_id else rng.uniform(0.45, 0.65)
+                tax[n_months - m:] *= 0.66 if int(sid) == golden_id else rng.uniform(0.45, 0.65)
             elif kind == "ops":
                 # Aylanma o'zgarmaydi, lekin operatsiyalar mayda va ko'p bo'lib ketadi.
                 avg_check[tail] /= rng.uniform(2.5, 4.0)

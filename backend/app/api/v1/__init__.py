@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
-from app.api.v1 import health
+from app.api.v1 import alerts, auth, dashboard, data, decisions, governance, health, meta, reports, subjects
 
 router = APIRouter()
-router.include_router(health.router)
+for module in (health, auth, meta, dashboard, subjects, decisions, alerts, reports, data, governance):
+    router.include_router(module.router)
