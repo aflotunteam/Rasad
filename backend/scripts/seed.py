@@ -47,6 +47,7 @@ from app.models import (  # noqa: E402
 from app.services import pipeline  # noqa: E402
 from data_gen.generate import generate  # noqa: E402
 from data_gen.reference import (  # noqa: E402
+    CALIBRATION,
     DATA_SOURCES,
     DEMO_USERS,
     GOLDEN_SUBJECT,
@@ -276,12 +277,34 @@ def main() -> None:
                               model_version=f"{engine.MODEL_KEY}-{engine.MODEL_VERSION}", created_at=at))
         db.query(RiskScore).filter(RiskScore.subject_id == sid).update({"expert_status": decision})
 
+    print("• Kalibrlash tekshiruvi (tanlanma va rasmiy statistika)…")
+    mt = ds.metrics[(ds.metrics["turnover"] > 0)].copy()
+    mt = mt[mt["period"].map(lambda p: p.year == 2025)].merge(
+        subj[["id", "sector_id"]], left_on="subject_id", right_on="id")
+    calib_check = {
+        "sectors": [
+            {"id": sid, "name": name, "official_share": round(share * 100, 2),
+             "sample_share": round(float((subj["sector_id"] == sid).mean() * 100), 2),
+             "official_mean_monthly_mln": round(mean, 1),
+             "sample_mean_monthly_mln": round(float(mt.loc[mt["sector_id"] == sid, "turnover"].mean()), 1),
+             "sample_median_monthly_mln": round(float(mt.loc[mt["sector_id"] == sid, "turnover"].median()), 1)}
+            for sid, name, _, share, mean, *_ in SECTORS
+        ],
+        "regions": [
+            {"id": rid, "name": name, "official_share": round(share * 100, 2),
+             "sample_share": round(float((subj["region_id"] == rid).mean() * 100), 2)}
+            for rid, name, _, _, share in REGIONS
+        ],
+        "size_groups": {k: round(float(v) * 100, 1) for k, v in subj["size_group"].value_counts(normalize=True).items()},
+    }
+
     print("• Sozlamalar va audit…")
     db.add_all([
         AppSetting(key="risk_thresholds", value={"low": s.low_threshold, "high": s.high_threshold},
                    updated_by="system"),
         AppSetting(key="drift_thresholds", value={"psi": 0.2, "rejection_rate": 0.35, "confidence_drop": 0.1},
                    updated_by="system"),
+        AppSetting(key="calibration", value={**CALIBRATION, "check": calib_check}, updated_by="system"),
         AppSetting(key="retention_policy", value=[
             {"data_type": "Xom ma’lumotlar (RAW)", "retention": "3 yil", "archive": "5 yil", "deletion": "Avtomatik, tasdiq bilan"},
             {"data_type": "Tahlil natijalari", "retention": "5 yil", "archive": "10 yil", "deletion": "Qo‘lda, rahbar tasdig‘i bilan"},

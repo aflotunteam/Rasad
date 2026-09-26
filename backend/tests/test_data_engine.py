@@ -84,3 +84,15 @@ def test_entity_resolution_respects_stir():
         SourceRecord("b", "2", "ABC MCHJ", stir="987654321"),
     ]
     assert len(resolve(recs)) == 2
+
+
+def test_sample_is_calibrated_to_official_aggregates(db):
+    from app.models import AppSetting
+
+    check = db.get(AppSetting, "calibration").value["check"]
+    for s in check["sectors"]:
+        assert abs(s["sample_share"] - s["official_share"]) < 2.0, s
+        assert abs(s["sample_mean_monthly_mln"] / s["official_mean_monthly_mln"] - 1) < 0.05, s
+    for r in check["regions"]:
+        assert abs(r["sample_share"] - r["official_share"]) < 1.5, r
+    assert 82 <= check["size_groups"]["small"] <= 88

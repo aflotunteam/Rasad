@@ -12,7 +12,7 @@ from app.core.db import get_db
 from app.core.deps import CurrentUser, require
 from app.core.errors import AppError, ErrorCode, NotFound
 from app.core.responses import ok
-from app.models import DataLineage, DataSource, ImportJob, Job
+from app.models import AppSetting, DataLineage, DataSource, ImportJob, Job
 from app.services import imports as imp_svc
 from app.services import jobs as job_svc
 from app.services import pipeline
@@ -31,6 +31,15 @@ def source_payload(s: DataSource) -> dict:
 @router.get("/data-sources")
 def list_sources(cu: CurrentUser = Depends(require("data_sources")), db: Session = Depends(get_db)):
     return ok([source_payload(s) for s in db.scalars(select(DataSource).order_by(DataSource.id))])
+
+
+@router.get("/data-sources/calibration")
+def calibration(cu: CurrentUser = Depends(require("dashboard")), db: Session = Depends(get_db)):
+    """Sintetik tanlanma qaysi rasmiy agregat statistikaga moslashtirilgani va tekshiruv natijasi."""
+    row = db.get(AppSetting, "calibration")
+    if row is None:
+        raise NotFound("Kalibrlash ma’lumoti topilmadi: bazani qayta seed qiling")
+    return ok(row.value)
 
 
 @router.get("/data-sources/{source_id}/lineage")

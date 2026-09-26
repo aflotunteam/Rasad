@@ -70,7 +70,7 @@ backend/
   ml/       Risk Engine: belgilar → qoidalar + Isolation Forest + vaqt + graf → kalibrlash → sabablar
   data_gen/ Deterministik sintetik generator (5000 subyekt, 14 hudud, 11 soha, 24 oy)
   scripts/  seed.py, make_samples.py
-  tests/    pytest (40 ta test)
+  tests/    pytest (42 ta test)
 data/samples/  Import ustasi uchun namuna fayllar (qasddan qo‘yilgan xatolar bilan)
 docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
 ```
@@ -81,6 +81,20 @@ docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
 - Ishonch darajasi ma’lumot sifati, tarix uzunligi, manbalar soni va modellar kelishuvidan hisoblanadi. Ma’lumot sifati 60 dan past bo‘lsa, ishonch «Past» dan oshmaydi.
 - SI izohi Claude Sonnet 5 bilan yoziladi va raqamlar tekshiruvidan o‘tadi; kalit bo‘lmasa, shablon izohi ishlatiladi.
 - API javoblari yagona formatda: `{"success", "data", "error"}`. Xato kodlari: `AUTH_*`, `DATA_*`, `MODEL_001`, `RISK_001`, `IMPORT_001`, `REPORT_001`, `SYSTEM_001`.
+
+## Sintetik ma’lumot va rasmiy statistika
+
+Subyektlar, STIR va ko‘rsatkichlar sun’iy, lekin tanlanma tuzilmasi rasmiy agregat statistikaga moslashtirilgan (`backend/data_gen/reference.py`):
+
+| Parametr | Manba |
+|---|---|
+| Hududlar bo‘yicha subyektlar ulushi | Faoliyat ko‘rsatayotgan korxonalar soni, 2026-yil 1-aprel (577,2 ming) |
+| Sohalar bo‘yicha ulush | Iqtisodiy faoliyat turlari bo‘yicha korxonalar soni, 2026-yil 1-avgust (601,3 ming) |
+| Sohalar bo‘yicha o‘rtacha oylik aylanma | 2025-yil hajmi / korxonalar soni / 12 (sanoat 1 101,1; qurilish 313,9; chakana savdo 482,4; qishloq xo‘jaligi 538,9; bozor xizmatlari 1 050,3 trln so‘m) |
+| Hududiy daraja | 2025-yil YaHM / korxonalar soni (ildiz bilan yumshatilgan) |
+| Kichik va mikro korxonalar ulushi | 84,9% |
+
+Har bir soha aylanmasi post-stratifikatsiya bilan rasmiy o‘rtachaga keltiriladi (±2%). Manbalar havolalari, taxminlar va tanlanma/rasmiy taqqoslash jadvali: **Ma’lumot manbalari → Sintetik ma’lumot kalibrlashi**.
 
 ## Sun’iy intellekt izohi (Claude Sonnet 5)
 
@@ -104,7 +118,7 @@ Sozlamalar: `AI_MODEL` (sukut bo‘yicha `claude-sonnet-5`), `AI_EFFORT` (`low`)
 | # | Mezon | Holat |
 |---|---|---|
 | AC-01 | Foydalanuvchi tizimga kira oladi | ✔ JWT, 5 ta demo hisob |
-| AC-02 | Kamida 5 000 ta sinov subyekti | ✔ 5 000 |
+| AC-02 | Kamida 5 000 ta sinov subyekti | ✔ 5 000, rasmiy tuzilmaga moslashtirilgan |
 | AC-03 | 14 hudud xaritada chiqadi | ✔ geoBoundaries ADM1 |
 | AC-04 | Hududni bosganda filtr ishlaydi | ✔ |
 | AC-05 | Subyekt kartasi ≤ 2 s da ochiladi | ✔ lokalda ≈ 0,15 s |
@@ -119,7 +133,7 @@ Sozlamalar: `AI_MODEL` (sukut bo‘yicha `claude-sonnet-5`), `AI_EFFORT` (`low`)
 ## Testlar
 
 ```bash
-cd backend && .venv/Scripts/python -m pytest -q          # 40 ta test: engine, API, RBAC, audit, import, hisobotlar
+cd backend && .venv/Scripts/python -m pytest -q          # 42 ta test: engine, API, RBAC, audit, import, hisobotlar
 cd frontend && npm test && npm run typecheck && npm run build   # 12 ta unit test + tiplar + build
 ```
 

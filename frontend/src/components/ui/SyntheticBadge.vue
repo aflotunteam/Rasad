@@ -5,7 +5,7 @@ withDefaults(defineProps<{ compact?: boolean }>(), { compact: false })
 </script>
 
 <template>
-  <span class="synthetic" :class="{ compact }" title="Barcha ko‘rsatkichlar sun’iy yaratilgan va rasmiy statistika emas">
+  <span class="synthetic" :class="{ compact }" title="Subyektlar va ko‘rsatkichlar sun’iy. Tanlanma tuzilmasi (hududlar, sohalar, o‘rtacha aylanma) rasmiy agregat statistikaga moslashtirilgan: Ma’lumot manbalari → Kalibrlash">
     <FlaskConical :size="compact ? 12 : 14" />
     <span>{{ compact ? 'Sintetik' : 'NAMOYISH MA’LUMOTLARI — SINTETIK' }}</span>
   </span>

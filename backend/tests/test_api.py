@@ -210,3 +210,9 @@ def test_recompute_job_keeps_expert_status(client, admin_h):
     assert job["status"] == "COMPLETED" and job["result"]["subjects"] == 5000
     d = client.get(f"{API}/subjects/SUB-000125", headers=admin_h).json()["data"]
     assert d["risk"]["expert_status"] == "sent_review"
+
+
+def test_calibration_endpoint(client, manager_h):
+    d = client.get(f"{API}/data-sources/calibration", headers=manager_h).json()["data"]
+    assert len(d["sources"]) >= 4 and d["assumptions"]
+    assert len(d["check"]["regions"]) == 14 and len(d["check"]["sectors"]) == 10

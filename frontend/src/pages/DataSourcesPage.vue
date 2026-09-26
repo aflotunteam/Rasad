@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { AlertCircle, CheckCircle2, Clock, PowerOff, Route } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
+import CalibrationPanel from '@/components/data/CalibrationPanel.vue'
 import ImportWizard from '@/components/data/ImportWizard.vue'
 import LoadingSkeleton from '@/components/ui/LoadingSkeleton.vue'
 import StateBlock from '@/components/ui/StateBlock.vue'
@@ -71,6 +72,8 @@ onMounted(load)
           <button class="btn btn-sm lin" @click="openLineage(s)"><Route :size="14" /> Ma’lumot kelib chiqishi</button>
         </article>
       </section>
+
+      <CalibrationPanel />
 
       <section v-if="auth.can('imports')" class="card imp">
         <div class="card-head"><div><div class="card-title">Ma’lumot importi</div><div class="card-sub">CSV, XLSX yoki JSON faylni tekshirib, RAW qatlamiga yuklash</div></div></div>

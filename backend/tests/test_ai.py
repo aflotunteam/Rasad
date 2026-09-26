@@ -76,7 +76,7 @@ def test_ai_explanation_is_generated_validated_and_cached(client, analyst_h, adm
     monkeypatch.setattr(explainer, "_call_model", fake)
     d = client.get(f"{API}/subjects/{GOLDEN}/explanation", headers=analyst_h).json()["data"]
     assert d["source"] == "ai" and d["model"] == "claude-sonnet-5" and d["model_label"] == "Claude Sonnet 5"
-    assert "81,7" in d["paragraphs"][0] and len(calls) == 1
+    assert calls[0]["risk_score"].split(" /")[0] in d["paragraphs"][0] and len(calls) == 1
 
     again = client.get(f"{API}/subjects/{GOLDEN}/explanation", headers=analyst_h).json()["data"]
     assert again["source"] == "ai" and len(calls) == 1  # keshdan

@@ -518,3 +518,22 @@ export interface UserRow {
   is_active: boolean
   last_login_at: string | null
 }
+
+export interface Calibration {
+  note: string
+  sources: { what: string; as_of: string; publisher: string; url: string }[]
+  assumptions: string[]
+  check: {
+    sectors: {
+      id: string
+      name: string
+      official_share: number
+      sample_share: number
+      official_mean_monthly_mln: number
+      sample_mean_monthly_mln: number
+      sample_median_monthly_mln: number
+    }[]
+    regions: { id: string; name: string; official_share: number; sample_share: number }[]
+    size_groups: Record<string, number>
+  }
+}

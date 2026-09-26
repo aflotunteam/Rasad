@@ -7,6 +7,7 @@ import type {
   AlertRow,
   AlertStatus,
   AuditPage,
+  Calibration,
   Dashboard,
   DataSource,
   Decision,
@@ -100,6 +101,7 @@ export const reportsApi = {
 
 export const dataApi = {
   sources: () => api.get<DataSource[]>('/data-sources'),
+  calibration: () => api.get<Calibration>('/data-sources/calibration'),
   lineage: (id: number) => api.get<Record<string, string>[]>(`/data-sources/${id}/lineage`),
   imports: () => api.get<ImportJob[]>('/imports'),
   upload: (file: File, dataSourceId?: number | null) => {

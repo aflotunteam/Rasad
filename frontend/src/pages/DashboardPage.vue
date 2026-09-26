@@ -102,7 +102,7 @@ function openCases() {
       <!-- KPI qatori -->
       <section class="kpis" aria-label="Asosiy ko‘rsatkichlar">
         <template v-if="data">
-          <MetricCard label="Tahlil qilingan subyektlar" :value="num(data.kpis.analyzed)" :icon="Building2" tone="navy" hint="Sintetik namoyish to‘plami" />
+          <MetricCard label="Tahlil qilingan subyektlar" :value="num(data.kpis.analyzed)" :icon="Building2" tone="navy" hint="Sintetik, rasmiy tuzilmaga moslashtirilgan" />
           <MetricCard
             label="Yuqori ustuvorlikdagi holatlar"
             :value="num(data.kpis.high_priority)"

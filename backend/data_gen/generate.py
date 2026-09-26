@@ -15,10 +15,20 @@ from datetime import date
 import numpy as np
 import pandas as pd
 
-from data_gen.reference import GOLDEN_SUBJECT, REGIONS, SECTORS, SIZE_GROUPS
+from data_gen.reference import (
+    GOLDEN_SUBJECT,
+    REGIONS,
+    SECTORS,
+    SIZE_GROUPS,
+    TURNOVER_SIGMA,
+    region_level,
+    size_mean_factor,
+)
 
-REGION_LEVEL = {"TK": 1.30, "TO": 1.05, "SA": 1.0, "FA": 0.95, "AN": 0.95, "NG": 0.92, "BU": 1.0,
-                "QA": 0.97, "NW": 1.08, "XO": 0.9, "SU": 0.88, "JI": 0.87, "SI": 0.86, "QR": 0.85}
+# Hududiy daraja rasmiy YaHM asosida; korxonalar ulushi bilan tortilgan o'rtachasi 1 ga keltiriladi,
+# shunda tanlanmaning soha bo'yicha o'rtacha aylanmasi rasmiy qiymatga mos keladi.
+_LEVEL_NORM = sum(w * region_level(r) for r, _, _, _, w in REGIONS)
+REGION_LEVEL = {r: region_level(r) / _LEVEL_NORM for r, _, _, _, _ in REGIONS}
 
 ANOMALY_KINDS = ["drop", "spike", "tax_low", "ops", "conflict", "seasonal"]
 ANOMALY_WEIGHTS = [0.30, 0.10, 0.17, 0.16, 0.15, 0.12]
@@ -125,7 +135,9 @@ def generate(n_subjects: int = 5000, seed: int = 2026, end: date = date(2026, 8,
     for sid, s in subjects.iterrows():
         sec = sector_by_id[s.sector_id]
         _, _, _, _, base_turnover, amp, peak, check = sec
-        base = base_turnover * size_mult[s.size_group] * REGION_LEVEL[s.region_id] * rng.lognormal(0, 0.35)
+        # base_turnover — rasmiy o'rtacha; mediana = o'rtacha / hajm aralashmasi koeffitsienti.
+        median = base_turnover / size_mean_factor()
+        base = median * size_mult[s.size_group] * REGION_LEVEL[s.region_id] * rng.lognormal(0, TURNOVER_SIGMA)
         growth = rng.normal(0.004, 0.004)
         amp_s = max(0.0, amp * rng.normal(1.0, 0.15))
         seasonal = 1 + amp_s * np.cos(2 * np.pi * (months - peak) / 12)
@@ -178,6 +190,20 @@ def generate(n_subjects: int = 5000, seed: int = 2026, end: date = date(2026, 8,
 
     metrics = pd.DataFrame(rows, columns=["subject_id", "period", "turnover", "tx_count", "avg_check",
                                           "tax_index", "registry_turnover"])
+    # Post-stratifikatsiya: har bir soha bo'yicha 2025-yil oylik o'rtacha aylanmasi rasmiy qiymatga
+    # (yillik hajm / korxonalar soni / 12) teng bo'lishi uchun soha aylanmasi bitta koeffitsientga ko'paytiriladi.
+    # Koeffitsient soha ichida bir xil, shuning uchun nisbiy belgilar va xavf baholari o'zgarmaydi.
+    sector_of = subjects.set_index("id")["sector_id"]
+    metrics["sector_id"] = metrics["subject_id"].map(sector_of)
+    in_2025 = metrics["period"].map(lambda p: p.year == 2025)
+    targets = {s[0]: s[4] for s in SECTORS}
+    for sid, target in targets.items():
+        mask = metrics["sector_id"] == sid
+        sample_mean = metrics.loc[mask & in_2025, "turnover"].mean()
+        if sample_mean and sample_mean > 0:
+            factor = target / sample_mean
+            metrics.loc[mask, ["turnover", "registry_turnover"]] *= factor
+    metrics = metrics.drop(columns=["sector_id"])
     metrics["avg_check"] = metrics["turnover"] * 1000 / metrics["tx_count"]
 
     # --- Ma'lumot sifati muammolari ---------------------------------------
