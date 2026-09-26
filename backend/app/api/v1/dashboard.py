@@ -15,7 +15,7 @@ def get_dashboard(
     cu: CurrentUser = Depends(require("dashboard")),
     db: Session = Depends(get_db),
 ):
-    return ok(dashboard(db, region, cu.region_scope))
+    return ok(dashboard(db, region or None, cu.region_scope))
 
 
 @router.get("/regions")

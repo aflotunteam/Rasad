@@ -47,6 +47,8 @@ def test_dashboard_and_map_regions(client, admin_h):
     assert ng["filter"]["region"] == "NG"  # AC-04
     assert ng["kpis"]["analyzed"] < 5000
     assert ng["top_cases"][0]["code"] == "SUB-000125"
+    empty = client.get(f"{API}/dashboard", params={"region": ""}, headers=admin_h).json()["data"]
+    assert empty["kpis"]["analyzed"] == 5000
 
 
 def test_rbac_matrix(client, auditor_h, manager_h, analyst_h):
