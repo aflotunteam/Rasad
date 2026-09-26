@@ -21,6 +21,8 @@ Skript Python va npm paketlarini o‘rnatadi, bazani sintetik ma’lumot bilan t
 
 Keyingi safar `.\scripts\dev.ps1` buyrug‘ining o‘zi yetarli. `-Seed` bazani boshlang‘ich holatga qaytaradi: demo oldidan shuni ishga tushiring.
 
+**Doimiy rejim.** `.\scripts\install-autostart.ps1` Windows’da "RASAD Server" vazifasini ro‘yxatdan o‘tkazadi. U tizimga kirganda `scripts\serve.ps1` nazoratchisini ishga tushiradi. Nazoratchi API (8000) va veb (5173) jarayonlarini kuzatadi. Jarayon to‘xtasa yoki `/health` 3 marta ketma-ket javob bermasa, uni qayta ishga tushiradi. Loglar `logs\` papkasiga yoziladi. O‘chirish uchun: `.\scripts\install-autostart.ps1 -Remove`.
+
 <details>
 <summary>Qo‘lda ishga tushirish</summary>
 
