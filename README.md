@@ -70,7 +70,7 @@ backend/
   ml/       Risk Engine: belgilar → qoidalar + Isolation Forest + vaqt + graf → kalibrlash → sabablar
   data_gen/ Deterministik sintetik generator (5000 subyekt, 14 hudud, 11 soha, 24 oy)
   scripts/  seed.py, make_samples.py
-  tests/    pytest (29 ta test)
+  tests/    pytest (40 ta test)
 data/samples/  Import ustasi uchun namuna fayllar (qasddan qo‘yilgan xatolar bilan)
 docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
 ```
@@ -79,8 +79,25 @@ docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
 
 - Har bir omilning ta’siri yakuniy bahoga proporsional taqsimlanadi. «NEGA?» oynasidagi ballar yig‘indisi xavf bahosiga teng.
 - Ishonch darajasi ma’lumot sifati, tarix uzunligi, manbalar soni va modellar kelishuvidan hisoblanadi. Ma’lumot sifati 60 dan past bo‘lsa, ishonch «Past» dan oshmaydi.
-- SI izohi shablon asosida faqat hisoblangan natijalardan yasaladi. Til modeli ishlatilmaydi va yangi raqam yaratilmaydi.
+- SI izohi Claude Sonnet 5 bilan yoziladi va raqamlar tekshiruvidan o‘tadi; kalit bo‘lmasa, shablon izohi ishlatiladi.
 - API javoblari yagona formatda: `{"success", "data", "error"}`. Xato kodlari: `AUTH_*`, `DATA_*`, `MODEL_001`, `RISK_001`, `IMPORT_001`, `REPORT_001`, `SYSTEM_001`.
+
+## Sun’iy intellekt izohi (Claude Sonnet 5)
+
+SI izohi hisoblangan natijalarni o‘zbek tilidagi matnga aylantiradi. Model bahoni yaratmaydi.
+
+1. Loyiha ildizidagi `.env` faylida kalitni kiriting: `ANTHROPIC_API_KEY=sk-ant-...` (fayl gitga tushmaydi).
+2. Backend serverini qayta ishga tushiring.
+3. **Sozlamalar → Sun’iy intellekt xizmati → Ulanishni tekshirish** (token sarflamaydi).
+
+Himoya qatlamlari (`backend/app/ai/`):
+
+- Modelga faqat strukturali natija yuboriladi; javob JSON sxema bo‘yicha olinadi.
+- Javobdagi har bir son hisoblangan qiymatlar bilan solishtiriladi; o‘ylab topilgan son, ayb bildiruvchi so‘z yoki kirill yozuvi topilsa, matn rad etiladi.
+- Kalit yo‘q bo‘lsa, API xatosi, vaqt tugashi yoki rad etishda shablon izohi ko‘rsatiladi: platforma to‘xtamaydi.
+- Har bir izoh `ai_explanations` jadvalida keshlanadi (bir xil natija uchun qayta to‘lov yo‘q), token sarfi va audit yozuvi saqlanadi.
+
+Sozlamalar: `AI_MODEL` (sukut bo‘yicha `claude-sonnet-5`), `AI_EFFORT` (`low`), `AI_TIMEOUT_SECONDS` (30), `AI_ENABLED`.
 
 ## Qabul mezonlari (TZ §42)
 
@@ -102,7 +119,7 @@ docs/source/   Texnik topshiriq, UI spetsifikatsiyasi, GUI namunasi
 ## Testlar
 
 ```bash
-cd backend && .venv/Scripts/python -m pytest -q          # 29 ta test: engine, API, RBAC, audit, import, hisobotlar
+cd backend && .venv/Scripts/python -m pytest -q          # 40 ta test: engine, API, RBAC, audit, import, hisobotlar
 cd frontend && npm test && npm run typecheck && npm run build   # 12 ta unit test + tiplar + build
 ```
 

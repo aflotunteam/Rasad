@@ -15,4 +15,5 @@ rapidfuzz==3.*
 openpyxl==3.*
 reportlab==4.*
 httpx==0.28.*
+anthropic==1.*
 pytest==8.*

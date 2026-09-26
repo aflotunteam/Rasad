@@ -350,6 +350,27 @@ class AppSetting(Base):
     updated_by: Mapped[str | None] = mapped_column(String(64), nullable=True)
 
 
+class AiExplanation(Base):
+    """SI izohlari keshi va hisobi: kim, qaysi model, qaysi natija asosida, qancha token."""
+
+    __tablename__ = "ai_explanations"
+    __table_args__ = (Index("ix_ai_expl_subject", "subject_id", "input_hash"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    subject_id: Mapped[int] = mapped_column(ForeignKey("subjects.id", ondelete="CASCADE"))
+    input_hash: Mapped[str] = mapped_column(String(64))  # strukturali natija + prompt versiyasi
+    model: Mapped[str] = mapped_column(String(64))
+    status: Mapped[str] = mapped_column(String(16))  # ok | rejected | error
+    paragraphs: Mapped[list[str]] = mapped_column(JSON, default=list)
+    rejection_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
+    input_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    output_tokens: Mapped[int] = mapped_column(Integer, default=0)
+    latency_ms: Mapped[int] = mapped_column(Integer, default=0)
+    request_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    created_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(TS, default=utcnow)
+
+
 class AuditLog(Base):
     """Audit jurnali (TZ §23). Faqat qo'shiladi: API orqali o'zgartirilmaydi."""
 

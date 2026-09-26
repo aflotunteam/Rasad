@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Info, Save } from 'lucide-vue-next'
 import { computed, onMounted, ref } from 'vue'
+import AiServicePanel from '@/components/ai/AiServicePanel.vue'
 import LoadingSkeleton from '@/components/ui/LoadingSkeleton.vue'
 import StateBlock from '@/components/ui/StateBlock.vue'
 import { settingsApi } from '@/services/api'
@@ -89,6 +90,8 @@ onMounted(load)
         </dl>
         <p class="xs muted">Chegaradan oshsa: «Modelni qayta tekshirish talab etiladi» ogohlantirishi chiqadi.</p>
       </section>
+
+      <AiServicePanel :can-test="s.can_edit" />
 
       <section class="card ret">
         <div class="card-head"><div class="card-title">Ma’lumotlarni saqlash siyosati</div></div>

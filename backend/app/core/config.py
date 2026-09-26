@@ -29,6 +29,14 @@ class Settings(BaseSettings):
 
     cors_origins: str = "http://localhost:5173"
 
+    # Sun'iy intellekt izohi (Anthropic Claude). Kalit bo'lmasa, shablon izohi ishlatiladi.
+    anthropic_api_key: str | None = None
+    ai_enabled: bool = True
+    ai_model: str = "claude-sonnet-5"
+    ai_effort: str = "low"
+    ai_timeout_seconds: float = 30.0
+    ai_max_tokens: int = 2000
+
     # Sintetik ma'lumotlar davri: oxirgi to'liq oy.
     data_period_end: str = "2026-08-01"
     history_months: int = 24

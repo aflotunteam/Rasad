@@ -10,7 +10,7 @@ from app.audit.service import record
 from app.core.db import get_db
 from app.core.deps import CurrentUser, require
 from app.core.responses import ok
-from app.services import explain
+from app.ai import explainer
 from app.services import subjects as svc
 from app.services.common import CONFIDENCE_LABELS, EXPERT_STATUS_LABELS, LEVEL_LABELS
 
@@ -99,10 +99,28 @@ def get_relations(code: str, depth: int = Query(2, ge=1, le=2), max_nodes: int =
     return ok(svc.relations(db, code, cu, depth, max_nodes))
 
 
+def _ai_explanation(db: Session, code: str, cu: CurrentUser, force: bool) -> dict:
+    subj = svc._get_subject(db, code, cu)
+    d = svc.subject_detail(db, code, cu)
+    data = explainer.explain_subject(db, subj.id, d["code"], d["region"]["name"], d["sector"]["name"], d["risk"],
+                                     d["factors"], user_id=cu.id, force=force)
+    if data["source"] == "ai" or force:
+        record(db, cu, "ai.explanation", "subject", d["code"],
+               new={"source": data["source"], "model": data["model"], "forced": force,
+                    "fallback": data["fallback_code"]})
+        db.commit()
+    return data
+
+
 @router.get("/{code}/explanation")
 def get_explanation(code: str, cu: CurrentUser = Depends(require("subjects")), db: Session = Depends(get_db)):
-    d = svc.subject_detail(db, code, cu)
-    return ok(explain.build(d["code"], d["risk"], d["factors"]))
+    return ok(_ai_explanation(db, code, cu, force=False))
+
+
+@router.post("/{code}/explanation/regenerate")
+def regenerate_explanation(code: str, cu: CurrentUser = Depends(require("decisions.write")),
+                           db: Session = Depends(get_db)):
+    return ok(_ai_explanation(db, code, cu, force=True))
 
 
 @router.get("/{code}/decisions")

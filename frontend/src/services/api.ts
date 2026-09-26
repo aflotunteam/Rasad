@@ -1,6 +1,8 @@
 // Domen servislari: UI faqat shu funksiyalar orqali backend bilan ishlaydi.
 import { api, download } from './http'
 import type {
+  AiStatus,
+  AiTestResult,
   AlertPage,
   AlertRow,
   AlertStatus,
@@ -71,6 +73,7 @@ export const subjectsApi = {
   relations: (code: string, depth = 2, maxNodes = 40) =>
     api.get<Relations>(`/subjects/${code}/relations`, { depth, max_nodes: maxNodes }),
   explanation: (code: string) => api.get<Explanation>(`/subjects/${code}/explanation`),
+  regenerateExplanation: (code: string) => api.post<Explanation>(`/subjects/${code}/explanation/regenerate`),
   decisions: (code: string) => api.get<Decision[]>(`/subjects/${code}/decisions`),
 }
 
@@ -134,4 +137,9 @@ export const usersApi = {
   list: () => api.get<UserRow[]>('/users'),
   update: (id: number, patch: Partial<Pick<UserRow, 'role' | 'region_id' | 'is_active'>>) =>
     api.patch<UserRow>(`/users/${id}`, patch),
+}
+
+export const aiApi = {
+  status: () => api.get<AiStatus>('/ai/status'),
+  test: () => api.post<AiTestResult>('/ai/test'),
 }

@@ -41,6 +41,7 @@ const relDepth = ref(2)
 const explanation = ref<Explanation | null>(null)
 const decisions = ref<Decision[]>([])
 const whyOpen = ref(false)
+const regenerating = ref(false)
 const creatingReport = ref(false)
 const loadMs = ref<number | null>(null)
 
@@ -87,6 +88,19 @@ async function load() {
 async function onDecision(d: Decision) {
   decisions.value = [d, ...decisions.value]
   if (detail.value) detail.value = await subjectsApi.get(code.value)
+}
+
+async function regenerate() {
+  regenerating.value = true
+  try {
+    explanation.value = await subjectsApi.regenerateExplanation(code.value)
+    if (explanation.value.source === 'ai') ui.toast('SI izohi qayta yozildi', 'success')
+    else ui.toast(explanation.value.fallback_reason ?? 'Shablon izohi ko‘rsatildi', 'info')
+  } catch (e) {
+    ui.toast(e instanceof ApiError ? e.message : 'Izohni qayta yozib bo‘lmadi', 'error')
+  } finally {
+    regenerating.value = false
+  }
 }
 
 async function makeReport() {
@@ -251,7 +265,13 @@ onMounted(load)
             </div>
           </div>
           <div class="card-body">
-            <AiExplanation v-if="explanation" :explanation="explanation" />
+            <AiExplanation
+              v-if="explanation"
+              :explanation="explanation"
+              :can-regenerate="auth.can('decisions.write')"
+              :busy="regenerating"
+              @regenerate="regenerate"
+            />
             <LoadingSkeleton v-else :lines="6" />
           </div>
         </div>

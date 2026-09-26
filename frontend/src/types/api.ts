@@ -272,6 +272,53 @@ export interface Explanation {
   disclaimer: string
   generator: string
   inputs: Record<string, unknown>
+  source: 'ai' | 'template'
+  model: string | null
+  model_label: string | null
+  validated: boolean
+  fallback_reason: string | null
+  fallback_code: string | null
+  created_at: string | null
+}
+
+export interface AiStatus {
+  enabled: boolean
+  configured: boolean
+  model: string
+  model_label: string
+  effort: string
+  timeout_seconds: number
+  prompt_version: string
+  mode: 'ai' | 'template'
+  session: {
+    calls: number
+    ok: number
+    rejected: number
+    errors: number
+    last_ok_at: string | null
+    last_error: string | null
+    last_error_at: string | null
+    avg_latency_ms: number | null
+  }
+  totals: { ok: number; rejected: number; error: number; input_tokens: number; output_tokens: number }
+  recent: {
+    subject_code: string
+    status: 'ok' | 'rejected' | 'error'
+    model: string
+    reason: string | null
+    input_tokens: number
+    output_tokens: number
+    latency_ms: number
+    created_at: string
+  }[]
+}
+
+export interface AiTestResult {
+  ok: boolean
+  message: string
+  model?: string
+  display_name?: string | null
+  latency_ms?: number
 }
 
 export interface Decision {

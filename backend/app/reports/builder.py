@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from app.core.deps import CurrentUser
 from app.core.errors import AppError, ErrorCode, Forbidden
 from app.models import Region, Report, RiskScore, Sector
+from app.ai import explainer
 from app.services import explain
 from app.services import subjects as svc
 from app.services.analytics import scores_frame
@@ -84,7 +85,9 @@ def build_content(db: Session, report: Report, cu: CurrentUser) -> dict:
                                           "source_count", "history_months")},
             "risk": d["risk"],
             "factors": d["factors"],
-            "explanation": explain.build(d["code"], d["risk"], d["factors"]),
+            "explanation": explainer.cached_or_template(db, svc._get_subject(db, p["code"], cu).id, d["code"],
+                                                        d["region"]["name"], d["sector"]["name"], d["risk"],
+                                                        d["factors"]),
             "decisions": svc.decisions(db, p["code"], cu),
             "relations": rel["summary"],
         }
