@@ -8,6 +8,8 @@ from pathlib import Path
 _TMP = Path(tempfile.mkdtemp(prefix="rasad-test-"))
 os.environ["DATABASE_URL"] = f"sqlite:///{(_TMP / 'test.db').as_posix()}"
 os.environ["JWT_SECRET"] = "test-secret"
+# Testlar hech qachon haqiqiy Anthropic API ni chaqirmasligi kerak: .env dagi kalit e'tiborsiz qoldiriladi.
+os.environ["ANTHROPIC_API_KEY"] = ""
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import pytest  # noqa: E402

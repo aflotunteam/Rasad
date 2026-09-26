@@ -13,7 +13,7 @@ import re
 from collections.abc import Iterable
 
 FORBIDDEN = re.compile(
-    r"\b(aybdor\w*|jinoyat\w*|firibgar\w*|qonunbuzar\w*|noqonuniy\w*|jazola\w*|jinoiy\w*)",
+    r"\b(aybdor\w*|jinoyat\w*|firibgar\w*|qonunbuzar\w*|huquqbuzar\w*|noqonuniy\w*|jazola\w*|jinoiy\w*)",
     re.IGNORECASE,
 )
 CYRILLIC = re.compile(f"[{chr(0x0400)}-{chr(0x04FF)}]")

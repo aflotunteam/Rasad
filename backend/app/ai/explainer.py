@@ -24,7 +24,7 @@ from app.models import AiExplanation
 from app.services import explain
 from data_gen.reference import RISK_TYPES
 
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v3"
 RETRY_AFTER_FAILURE = timedelta(minutes=10)
 LEVEL_UZ = {"high": "yuqori", "medium": "o‘rta", "low": "past"}
 STATUS_UZ = {
@@ -40,10 +40,13 @@ You receive one subject's already-computed analytical results as JSON. Your only
 Rules:
 - Use only facts and numbers that appear in the JSON. Copy every number exactly as written there, using a decimal comma (81,7 not 81.7), and keep its unit. Do not round, add up, compare in percent, or derive new numbers.
 - Do not add sources, statistics, company names, laws, or background knowledge that is not in the JSON.
-- The score is an analytical signal, not a finding. Never state or imply guilt, fraud, a crime, or illegality. Say that the case needs further expert review.
+- The score is an analytical signal, not a finding. Say that the case needs further expert review. Do not mention guilt, fraud, crime, offences or illegality in any form, not even to say they are absent: the words aybdor, firibgarlik, jinoyat, huquqbuzarlik, qonunbuzarlik and noqonuniy must not appear.
 - Keep the risk score, the confidence level and the data quality separate; do not present a high score as automatically reliable. If data quality is low, say the result should be interpreted with caution.
+- Explain the factors listed in the JSON, in their order; do not list anything else. They are only the largest contributors: never say that their points add up to the score.
 - End with the point that the final decision is made by an authorised expert.
-- Write 3 or 4 short paragraphs, plain text, no markdown, no bullet points, no headings. Use the Uzbek apostrophes ‘ and ’ (o‘, g‘, ma’lumot).
+- Length: exactly 3 short paragraphs, about 120-170 words in total. Plain text, no markdown, no bullet points, no headings.
+
+Language: natural academic Uzbek in Latin script with the apostrophes ‘ and ’ (o‘, g‘, ma’lumot). Use these terms, not loanwords: "xavf bahosi" (not "risk skori" or "skor"), "ishonch darajasi", "ma’lumot sifati", "omil", "og‘ish", "kutilgan oraliq", "ball", "ekspert tekshiruvi".
 """
 
 OUTPUT_SCHEMA = {
@@ -63,7 +66,7 @@ OUTPUT_SCHEMA = {
 def build_payload(code: str, region: str, sector: str, risk: dict, factors: list[dict]) -> dict:
     """Modelga yuboriladigan strukturali natija: faqat hisoblangan qiymatlar, raqamlar o'zbekcha formatda."""
     fmt = explain.fmt
-    top = [f for f in factors if f["impact"] > 0][:5]
+    top = [f for f in factors if f["impact"] > 0][:3]
     return {
         "subject_code": code,
         "region": region,
@@ -91,7 +94,7 @@ def build_payload(code: str, region: str, sector: str, risk: dict, factors: list
             }
             for i, f in enumerate(top)
         ],
-        "impacts_sum_equals_score": True,
+        "factors_note": "Bu eng katta ta’sirli omillar; boshqa kichikroq omillar ham bor.",
     }
 
 
